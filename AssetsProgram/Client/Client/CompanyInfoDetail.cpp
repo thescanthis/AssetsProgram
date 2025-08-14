@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "CompanyInfoDetail.h"
-#include "MaskedTextCtrl.h"
 
 /*
 Frame(CompanyInfoDetail)
@@ -41,8 +40,7 @@ Frame(CompanyInfoDetail)
                      확장 사용이면 proportion=1 | wxEXPAND)
 */
 
-CompanyInfoDetail::CompanyInfoDetail(wxWindow* parent)
-	:wxFrame(parent, wxID_ANY, "회사정보", wxDefaultPosition, wxSize(800, 400))
+CompanyInfoDetail::CompanyInfoDetail(wxWindow* parent, const wxString Title) : WidgetParent(parent, Title)
 {
 	SetSizeHints(800, 400, 800, 400);         // 고정 크기(원하면 제거)
     m_panel = new wxPanel(this, wxID_ANY);

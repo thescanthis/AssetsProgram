@@ -1,23 +1,14 @@
 ﻿#pragma once
-class CompanyInfoDetail : public wxFrame
+#include "WidgetParent.h"
+class CompanyInfoDetail : public WidgetParent
 {
 public:
-	explicit  CompanyInfoDetail(wxWindow* parent = nullptr);
-	~CompanyInfoDetail();
+	explicit  CompanyInfoDetail(wxWindow* parent = nullptr, const wxString Title="");
+	virtual ~CompanyInfoDetail();
 
-	void BtnTitleInit();
-
-	void LeftBodyInit();
-	void InfoTitleInit();
-
-	void RightBodyInit();
-private:
-
-	C_Details Infomation;
-	wxPanel *m_panel, *m_TopPanel, *m_LeftPanel, *m_RightPanel;
-	std::vector<wxStaticText*> InfoTitle;
-	std::vector<wxTextCtrl*>   InfoEdit;
-
-	wxBoxSizer* m_bodySizer = nullptr;   // 본문(좌우) 배치용 H sizer
+	void BtnTitleInit() override;
+	void LeftBodyInit() override;
+	void InfoTitleInit() override;
+	void RightBodyInit() override;
 };
 

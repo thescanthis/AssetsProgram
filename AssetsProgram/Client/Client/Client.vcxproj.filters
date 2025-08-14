@@ -54,6 +54,9 @@
     <ClInclude Include="InventorySearch.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
+    <ClInclude Include="WidgetParent.h">
+      <Filter>SubFrame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -87,6 +90,9 @@
       <Filter>SubFrame</Filter>
     </ClCompile>
     <ClCompile Include="InventorySearch.cpp">
+      <Filter>SubFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetParent.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
   </ItemGroup>

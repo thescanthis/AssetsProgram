@@ -25,8 +25,8 @@ CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 
 	if (CompanyPanels.size() >= 2) {
 		// 0번: 회사입력 / 재고추가
-		CompanyPanels[0]->AddButton("회사정보", MakeSingletonOpener<CompanyInfoDetail>(this), 8);
-		CompanyPanels[0]->AddButton("거래처정보",MakeSingletonOpener<ClientInfo>(this),8);
+		CompanyPanels[0]->AddButton("회사정보", MakeSingletonOpener<CompanyInfoDetail>(this,"회사정보"), 8);
+		CompanyPanels[0]->AddButton("거래처정보",MakeSingletonOpener<ClientInfo>(this,"거래처정보"), 8);
 		CompanyPanels[0]->GetContentSizer()->AddStretchSpacer(); // 아래 공간 밀어내기(선택)
 
 		// 1번: 거래처정보 / 재고조회
@@ -40,7 +40,7 @@ CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 
 CopyFrame::~CopyFrame()
 {
-	
+	singletons_.clear();
 }
 
 void CopyFrame::OpenInventoryAdd()

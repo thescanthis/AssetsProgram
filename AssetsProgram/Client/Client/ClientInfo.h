@@ -1,25 +1,25 @@
 ﻿#pragma once
-class ClientInfo : public wxFrame
+#include "WidgetParent.h"
+class ClientInfo : public WidgetParent
 {
 public:
-	explicit ClientInfo(wxWindow* parent = nullptr);
-	~ClientInfo();
+	explicit ClientInfo(wxWindow* parent = nullptr, const wxString Title = "");
+	virtual ~ClientInfo();
 
 public:
 	
 private:
-	void BtnTitleInit();
-	void LeftBodyInit();
-	void RightBodyInit();
+	void BtnTitleInit() override;
+	void LeftBodyInit() override;
+	void RightBodyInit() override;
+	void InfoTitleInit() override;
+
 	void RightBottmInit();
-	void ClientDetails();
+	
 private:
-	wxPanel* m_panel, * m_TopPanel, * m_LeftPanel, * m_RightPanel,*m_RightBottmPanel;
-	std::vector<wxStaticText*> InfoTitle;
-	std::vector<wxTextCtrl*>   InfoEdit;
+	wxPanel* m_RightBottmPanel;
 
 	wxBoxSizer* shell = nullptr;
-	wxBoxSizer* m_bodySizer = nullptr;
 	wxGrid* m_grid;
 };
 

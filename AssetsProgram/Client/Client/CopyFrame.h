@@ -35,9 +35,13 @@ public:
 
                 ptr->Bind(wxEVT_CLOSE_WINDOW, [](wxCloseEvent& e) { e.Skip(); });
                 ptr->Bind(wxEVT_DESTROY, [this](wxWindowDestroyEvent& ev) {
+
                     wxWindow* w = static_cast<wxWindow*>(ev.GetEventObject());
-                    for (auto& kv : singletons_) if (kv.second == w) { kv.second = nullptr; break; }
-                    });
+
+                    if (!singletons_.empty()) {
+                        for (auto& kv : singletons_) if (kv.second == w) { kv.second = nullptr; break; }
+                    }
+                });
             }
             if (!ptr->IsShown()) ptr->Show();
             ptr->Raise();

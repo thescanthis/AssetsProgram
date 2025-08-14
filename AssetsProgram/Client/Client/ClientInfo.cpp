@@ -1,9 +1,7 @@
 ﻿#include "pch.h"
 #include "ClientInfo.h"
-#include "MaskedTextCtrl.h"
 
-ClientInfo::ClientInfo(wxWindow* parent)
-	:wxFrame(parent, wxID_ANY, "거래처정보", wxDefaultPosition, wxSize(800, 600))
+ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : WidgetParent(parent,Title)
 {
 	SetSizeHints(800, 600, 800, 600);         // 고정 크기(원하면 제거)
 	m_panel = new wxPanel(this, wxID_ANY);
@@ -53,7 +51,7 @@ void ClientInfo::LeftBodyInit()
 	auto* leftRoot = new wxBoxSizer(wxVERTICAL);
 	m_LeftPanel->SetSizer(leftRoot);
 
-	ClientDetails();
+    InfoTitleInit();
 
 	shell->Add(m_bodySizer);
 }
@@ -220,7 +218,7 @@ void ClientInfo::RightBottmInit()
     m_panel->Layout(); // 필요 시
 }
 
-void ClientInfo::ClientDetails()
+void ClientInfo::InfoTitleInit()
 {
     auto* LeftSz = new wxBoxSizer(wxVERTICAL);
     m_LeftPanel->SetSizer(LeftSz);
