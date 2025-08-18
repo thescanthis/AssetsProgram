@@ -4,8 +4,8 @@
 ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : WidgetParent(parent,Title)
 {
 	SetSizeHints(800, 600, 800, 600);         // 고정 크기(원하면 제거)
-	m_panel = new wxPanel(this, wxID_ANY);
-	m_panel->SetBackgroundColour(*wxWHITE);
+	//m_panel = new wxPanel(this, wxID_ANY);
+	//m_panel->SetBackgroundColour(*wxWHITE);
 
 	// 메인 패널
 	shell = new wxBoxSizer(wxVERTICAL);
@@ -26,9 +26,6 @@ ClientInfo::~ClientInfo()
 
 void ClientInfo::BtnTitleInit()
 {
-	m_TopPanel = new wxPanel(m_panel, wxID_ANY);
-	m_TopPanel->SetBackgroundColour(wxColour(247, 249, 253));
-
 	auto* topSz = new wxBoxSizer(wxHORIZONTAL);
 	m_TopPanel->SetSizer(topSz);
 	topSz->AddStretchSpacer();
@@ -43,8 +40,8 @@ void ClientInfo::BtnTitleInit()
 void ClientInfo::LeftBodyInit()
 {
 	// 기본정보
-	m_LeftPanel = new wxPanel(m_panel, wxID_ANY);
-    m_LeftPanel->SetBackgroundColour(*wxWHITE);
+	//m_LeftPanel = new wxPanel(m_panel, wxID_ANY);
+    //m_LeftPanel->SetBackgroundColour(*wxWHITE);
 	m_bodySizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// 왼쪽 패널 내부용 세로 sizer
@@ -60,8 +57,8 @@ void ClientInfo::RightBodyInit()
 {
     auto* vline = new wxStaticLine(m_panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
 
-    m_RightPanel = new wxPanel(m_panel, wxID_ANY);
-    m_RightPanel->SetBackgroundColour(*wxWHITE);
+   // m_RightPanel = new wxPanel(m_panel, wxID_ANY);
+   // m_RightPanel->SetBackgroundColour(*wxWHITE);
 
     // 오른쪽 내부 sizer
     auto* rightSz = new wxBoxSizer(wxVERTICAL);
@@ -78,8 +75,8 @@ void ClientInfo::RightBodyInit()
 // 가로 상단바: [기본정보] ..... (빈공간)
     auto* topL = new wxBoxSizer(wxHORIZONTAL);
     auto* title = new wxStaticText(right, wxID_ANY, "[기본정보]");
-    { wxFont f = title->GetFont(); f.MakeBold(); title->SetFont(f); }
-    title->SetForegroundColour(wxColour(80, 80, 120));
+    TitleFontInit(title);
+
     topL->Add(title, 0, wxALIGN_CENTER_VERTICAL);
     topL->AddStretchSpacer();
 
@@ -176,8 +173,8 @@ void ClientInfo::RightBottmInit()
     auto* topH = new wxBoxSizer(wxHORIZONTAL);
 
     auto* title = new wxStaticText(m_RightBottmPanel, wxID_ANY, "[거래처 담당자]");
-    { wxFont f = title->GetFont(); f.MakeBold(); title->SetFont(f); }
-    title->SetForegroundColour(wxColour(80, 80, 120));
+    TitleFontInit(title);
+
     topH->Add(title, 0, wxALIGN_CENTER_VERTICAL);
 
     topH->AddStretchSpacer();

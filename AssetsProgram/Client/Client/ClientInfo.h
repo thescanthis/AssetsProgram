@@ -20,6 +20,5 @@ private:
 	wxPanel* m_RightBottmPanel;
 
 	wxBoxSizer* shell = nullptr;
-	wxGrid* m_grid;
 };
 

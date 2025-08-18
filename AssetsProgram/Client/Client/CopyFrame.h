@@ -12,9 +12,6 @@ public:
 private:
 	CompanyInfo* PanelAt(size_t i) { return i < CompanyPanels.size() ? CompanyPanels[i] : nullptr; }
 
-	void OpenInventoryAdd();
-	void OpenPartnerInfo();
-	void OpenInventoryQuery();
 private:
 	std::vector<CompanyInfo*> CompanyPanels;
 	std::unordered_map<std::type_index, wxWindow*> singletons_;

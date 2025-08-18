@@ -43,8 +43,8 @@ Frame(CompanyInfoDetail)
 CompanyInfoDetail::CompanyInfoDetail(wxWindow* parent, const wxString Title) : WidgetParent(parent, Title)
 {
 	SetSizeHints(800, 400, 800, 400);         // 고정 크기(원하면 제거)
-    m_panel = new wxPanel(this, wxID_ANY);
-    m_panel->SetBackgroundColour(wxColour(247, 249, 253));
+   //m_panel = new wxPanel(this, wxID_ANY);
+   //m_panel->SetBackgroundColour(wxColour(247, 249, 253));
 
     // 메인 패널
     auto* shell = new wxBoxSizer(wxVERTICAL);
@@ -80,10 +80,6 @@ CompanyInfoDetail::~CompanyInfoDetail()
 
 void CompanyInfoDetail::BtnTitleInit()
 {
-    // 상단바
-    m_TopPanel = new wxPanel(m_panel, wxID_ANY);
-    m_TopPanel->SetBackgroundColour(wxColour(247, 249, 253));
-
     auto* topSz = new wxBoxSizer(wxHORIZONTAL);
     m_TopPanel->SetSizer(topSz);
     topSz->AddStretchSpacer();
@@ -96,8 +92,8 @@ void CompanyInfoDetail::BtnTitleInit()
 void CompanyInfoDetail::LeftBodyInit()
 {
     // 기본정보
-    m_LeftPanel = new wxPanel(m_panel, wxID_ANY);
-    m_bodySizer = new wxBoxSizer(wxHORIZONTAL);
+    //m_LeftPanel = new wxPanel(m_panel, wxID_ANY);
+    //m_bodySizer = new wxBoxSizer(wxHORIZONTAL);
     m_LeftPanel->SetSizeHints(300, -1, 300, -1);      // 폭 300 고정
 
     // 왼쪽 패널 내부용 세로 sizer
@@ -114,10 +110,6 @@ void CompanyInfoDetail::RightBodyInit()
     // 세로 구분선 (부모는 m_panel — m_bodySizer가 붙은 윈도우와 동일)
     auto* vline = new wxStaticLine(
         m_panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
-
-    // 오른쪽 패널
-    m_RightPanel = new wxPanel(m_panel, wxID_ANY);
-    m_RightPanel->SetBackgroundColour(*wxWHITE);
     
     // 오른쪽 내부 sizer
     auto* rightSz = new wxBoxSizer(wxVERTICAL);
@@ -140,37 +132,37 @@ void CompanyInfoDetail::RightBodyInit()
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
     rightSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
 
-    auto* grid = new wxGrid(m_RightPanel, wxID_ANY);
-    grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
-    grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
+    m_grid = new wxGrid(m_RightPanel, wxID_ANY);
+    m_grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
+    m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
 
     // 컬럼 라벨
-    grid->SetColLabelValue(0, "선반위치");
-    grid->SetColLabelValue(1, "라벨코드");
-    grid->SetColLabelValue(2, "이름");
-    grid->SetColLabelValue(3, "물품 갯수");
+    m_grid->SetColLabelValue(0, "선반위치");
+    m_grid->SetColLabelValue(1, "라벨코드");
+    m_grid->SetColLabelValue(2, "이름");
+    m_grid->SetColLabelValue(3, "물품 갯수");
 
     // 모양/동작 기본값
-    grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
-    grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    grid->EnableGridLines(true);
-    grid->SetRowLabelSize(40);
-    grid->SetColLabelSize(28);
-    grid->SetDefaultRowSize(24);
+    m_grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
+    m_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
+    m_grid->EnableGridLines(true);
+    m_grid->SetRowLabelSize(40);
+    m_grid->SetColLabelSize(28);
+    m_grid->SetDefaultRowSize(24);
     
     // 예시 데이터(원하면 제거)
-    grid->SetCellValue(0, 0, "A-12");
-    grid->SetCellValue(0, 1, "C-123456788");
-    grid->SetCellValue(0, 2, "무전통신기-X025");
-    grid->SetCellValue(0, 3, "123456");
-    grid->AutoSizeColumns();
+    m_grid->SetCellValue(0, 0, "A-12");
+    m_grid->SetCellValue(0, 1, "C-123456788");
+    m_grid->SetCellValue(0, 2, "무전통신기-X025");
+    m_grid->SetCellValue(0, 3, "123456");
+    m_grid->AutoSizeColumns();
 
-    grid->SetColSize(0, 70);
-    grid->SetColSize(1, 140);
-    grid->SetColSize(2, 140);
-    grid->SetColSize(3, 70);
+    m_grid->SetColSize(0, 70);
+    m_grid->SetColSize(1, 140);
+    m_grid->SetColSize(2, 140);
+    m_grid->SetColSize(3, 70);
 
-    rightSz->Add(grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
+    rightSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 
     // ★ 본문 H-BoxSizer에 순서대로 추가: Left | vline | Right
     m_bodySizer->Add(vline, 0, wxEXPAND);
@@ -191,8 +183,8 @@ void CompanyInfoDetail::InfoTitleInit()
 // 가로 상단바: [기본정보] ..... (빈공간)
     auto* topL = new wxBoxSizer(wxHORIZONTAL);
     auto* title = new wxStaticText(left, wxID_ANY, "[기본정보]");
-    { wxFont f = title->GetFont(); f.MakeBold(); title->SetFont(f); }
-    title->SetForegroundColour(wxColour(80, 80, 120));
+    TitleFontInit(title);
+
     topL->Add(title, 0, wxALIGN_CENTER_VERTICAL);
     topL->AddStretchSpacer();
 
@@ -267,7 +259,4 @@ void CompanyInfoDetail::InfoTitleInit()
 
     auto* leftRoot = wxDynamicCast(m_LeftPanel->GetSizer(), wxBoxSizer);
     leftRoot->Add(left, 1, wxEXPAND);   // ← m_LeftPanel 내부에만 추가
-
-    // 갱신
-    m_LeftPanel->Layout(); 
 }
