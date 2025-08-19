@@ -2,8 +2,8 @@
 #include "CopyFrame.h"
 #include "CompanyInfo.h"
 #include "CompanyInfoDetail.h"
+#include "productInfo.h"
 #include "ClientInfo.h"
-#include "InventoryAdd.h"
 #include "InventorySearch.h"
 
 CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
@@ -11,7 +11,12 @@ CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 {
 	int32 idx = 0;
 
-	wxString string[4][2] = { {"회사관리","재고관리"},{}};
+	wxString string[4][2] = 
+	{ 
+		{"회사정보","재고관리"},
+		{}
+	};
+
 	for (int32 i = 0; i < 2; i++)
 	{
 		auto* rowSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -25,13 +30,13 @@ CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 
 	if (CompanyPanels.size() >= 2) {
 		// 0번: 회사입력 / 재고추가
-		CompanyPanels[0]->AddButton("회사정보", MakeSingletonOpener<CompanyInfoDetail>(this,"회사정보"), 8);
-		CompanyPanels[0]->AddButton("거래처정보",MakeSingletonOpener<ClientInfo>(this,"거래처정보"), 8);
+		CompanyPanels[0]->AddButton("회사정보", Template->MakeSingletonOpener<CompanyInfoDetail>(this,"회사정보"), 8);
+		CompanyPanels[0]->AddButton("상품정보", Template->MakeSingletonOpener<ProductInfo>(this, "상품정보"), 8);
+		CompanyPanels[0]->AddButton("거래처정보", Template->MakeSingletonOpener<ClientInfo>(this,"거래처정보"), 8);
 		CompanyPanels[0]->GetContentSizer()->AddStretchSpacer(); // 아래 공간 밀어내기(선택)
 
 		// 1번: 거래처정보 / 재고조회
-		CompanyPanels[1]->AddButton("재고조회", MakeSingletonOpener<InventorySearch>(this,"재고조회"), 8);
-		CompanyPanels[1]->AddButton("재고추가",MakeSingletonOpener<InventoryAdd>(this,"재고추가"), 8);
+		CompanyPanels[1]->AddButton("재고관리", Template->MakeSingletonOpener<InventorySearch>(this, "재고관리"), 8);
 		CompanyPanels[1]->GetContentSizer()->AddStretchSpacer(); // 선택
 	}
 
@@ -40,6 +45,5 @@ CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 
 CopyFrame::~CopyFrame()
 {
-	singletons_.clear();
 	CompanyPanels.clear();
 }

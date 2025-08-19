@@ -48,14 +48,20 @@
     <ClInclude Include="ClientInfo.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
-    <ClInclude Include="InventoryAdd.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
     <ClInclude Include="InventorySearch.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
     <ClInclude Include="WidgetParent.h">
       <Filter>SubFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductInfo.h">
+      <Filter>SubFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryAdd.h">
+      <Filter>SubFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateFunc.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,13 +92,16 @@
     <ClCompile Include="ClientInfo.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
-    <ClCompile Include="InventoryAdd.cpp">
-      <Filter>SubFrame</Filter>
-    </ClCompile>
     <ClCompile Include="InventorySearch.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
     <ClCompile Include="WidgetParent.cpp">
+      <Filter>SubFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductInfo.cpp">
+      <Filter>SubFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryAdd.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
   </ItemGroup>

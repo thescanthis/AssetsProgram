@@ -1,15 +1,13 @@
 #pragma once
 #include "WidgetParent.h"
-class wxTreeCtrl;
 
+class wxTreeCtrl;
+class InventoryAdd;
 class InventorySearch : public WidgetParent
 {
 public:
 	explicit InventorySearch(wxWindow* parent = nullptr, const wxString Title = "");
 	virtual ~InventorySearch();
-
-private:
-	void BuildLayoutInit();
 
 public:
 	virtual void BtnTitleInit() override;
@@ -19,16 +17,19 @@ public:
 	virtual void InfoTitleInit() override;
 	virtual void RightBodyInit() override;
 
-	
-
 private:
+	void BtnAddInventory(wxCommandEvent& event);
+
+protected:
 
 	wxBoxSizer* shell = nullptr;
-	wxTreeCtrl* TreeCtrl = nullptr;
 
 	wxPanel* m_RightTopPanel;
 	wxPanel* m_LeftBottmPanel;
 
 	wxBoxSizer* m_TopSizer = nullptr;   // 본문(좌우) 배치용 H sizer
+
+private:
+	InventoryAdd* AddInven;
 };
 

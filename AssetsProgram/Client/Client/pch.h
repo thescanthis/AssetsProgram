@@ -3,6 +3,7 @@
 #include <wx/statbmp.h>    // wxStaticBitmap
 #include <wx/dcbuffer.h>
 #include <wx/statline.h>
+#include <wx/treectrl.h>
 #include "Types.h"
 
 #include <windows.h>
@@ -28,6 +29,7 @@
 #include <condition_variable>
 
 #include <functional>
+#include "TemplateFunc.h"
 
 #include <winsock2.h>
 #include <mswsock.h>

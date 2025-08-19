@@ -1,11 +1,15 @@
 #include "pch.h"
 #include "MainFrame.h"
 
+TemplateFunc* Template = nullptr;
+
 class MyApp : public wxApp {
 public:
     virtual bool OnInit() {
         _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);  // 자동 릭 체크
         wxInitAllImageHandlers(); // wxImage용 초기화
+
+        Template = new TemplateFunc();
 
         frame = new MainFrame();
         frame->Show();
@@ -15,6 +19,7 @@ public:
     }
 
     virtual int OnExit() override {
+        delete Template;
         wxImage::CleanUpHandlers(); // 정리 작업
         return wxApp::OnExit();
     }

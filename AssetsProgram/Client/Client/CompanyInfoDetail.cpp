@@ -43,8 +43,6 @@ Frame(CompanyInfoDetail)
 CompanyInfoDetail::CompanyInfoDetail(wxWindow* parent, const wxString Title) : WidgetParent(parent, Title)
 {
 	SetSizeHints(800, 400, 800, 400);         // 고정 크기(원하면 제거)
-   //m_panel = new wxPanel(this, wxID_ANY);
-   //m_panel->SetBackgroundColour(wxColour(247, 249, 253));
 
     // 메인 패널
     auto* shell = new wxBoxSizer(wxVERTICAL);
@@ -91,9 +89,6 @@ void CompanyInfoDetail::BtnTitleInit()
 
 void CompanyInfoDetail::LeftBodyInit()
 {
-    // 기본정보
-    //m_LeftPanel = new wxPanel(m_panel, wxID_ANY);
-    //m_bodySizer = new wxBoxSizer(wxHORIZONTAL);
     m_LeftPanel->SetSizeHints(300, -1, 300, -1);      // 폭 300 고정
 
     // 왼쪽 패널 내부용 세로 sizer
@@ -124,10 +119,10 @@ void CompanyInfoDetail::RightBodyInit()
     topH->Add(rtitle, 0, wxLEFT |wxTOP | wxRIGHT | wxBOTTOM, 8);
 
     topH->AddStretchSpacer();
-    auto* btnSave = new wxButton(m_RightPanel, wxID_SAVE, "추가");
-    auto* btnExit = new wxButton(m_RightPanel, wxID_EXIT, "삭제");
-    topH->Add(btnSave, 0, wxALL, 8);
-    topH->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+    //auto* btnSave = new wxButton(m_RightPanel, wxID_SAVE, "추가");
+    //auto* btnExit = new wxButton(m_RightPanel, wxID_EXIT, "삭제");
+    //topH->Add(btnSave, 0, wxALL, 8);
+    //topH->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
 
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
     rightSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
@@ -137,10 +132,10 @@ void CompanyInfoDetail::RightBodyInit()
     m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
 
     // 컬럼 라벨
-    m_grid->SetColLabelValue(0, "선반위치");
-    m_grid->SetColLabelValue(1, "라벨코드");
-    m_grid->SetColLabelValue(2, "이름");
-    m_grid->SetColLabelValue(3, "물품 갯수");
+    m_grid->SetColLabelValue(0, InventoryTitle[M_CLASS]);
+    m_grid->SetColLabelValue(1, InventoryTitle[I_CLASS]);
+    m_grid->SetColLabelValue(2, InventoryTitle[P_CLASS]);
+    m_grid->SetColLabelValue(3, InventoryTitle[IS_CLASS]);
 
     // 모양/동작 기본값
     m_grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
@@ -221,39 +216,9 @@ void CompanyInfoDetail::InfoTitleInit()
         return ed;
         };
 
-    // ── 실제 필드 추가 (요청: 01/02/04/05/07/08/09) ──
-    // 01. 회사명
-    addRow("01. 회사명", makeEdit(""));
+    for (int i = 0; i < TitleInfo.size(); i++)
+        addRow(wxString(std::to_string(i + 1)) + ". " + TitleInfo[i], makeEdit(""));
 
-    // 02. 사업자등록번호 (3-2-5) — 항상 보이는 마스크
-    auto* bizMask = new MaskedTextCtrl(
-        left, wxID_ANY,
-        L"_\u2009_\u2009_-\u2009_\u2009_\u2009-_\u2009_\u2009_\u2009_\u2009_",
-        wxBORDER_SIMPLE
-    );
-    InfoEdit.push_back(bizMask);        // ← wxTextCtrl*로 보관 (업캐스트)
-    addRow("02. 사업자등록번호", bizMask);
-
-    // 03. 법인등록번호 (6-7)
-    auto* corpMask = new MaskedTextCtrl(
-        left, wxID_ANY,
-        L"_\u2009_\u2009_\u2009_\u2009_\u2009_-\u2009_\u2009_\u2009_\u2009_\u2009_\u2009_\u2009_\u2009",
-        wxBORDER_SIMPLE
-    );
-    InfoEdit.push_back(corpMask);
-    addRow("03. 법인등록번호", corpMask);
-
-    // 04. 대표자명
-    addRow("04. 대표자명", makeEdit(""));
-
-    // 05. 사업장주소
-    addRow("05. 사업장주소", makeEdit(""));
-
-    // 06. 업태
-    addRow("06. 업태", makeEdit(""));
-
-    // 07. 종목
-    addRow("07. 종목", makeEdit(""));
 
     left->SetSizer(v);
 

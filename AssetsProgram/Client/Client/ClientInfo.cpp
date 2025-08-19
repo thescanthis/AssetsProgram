@@ -12,7 +12,7 @@ ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : WidgetParent(pa
 	m_panel->SetSizer(shell);
 
 	BtnTitleInit();
-	LeftBodyInit();
+    LeftBodyInit();
     RightBodyInit();
     RightBottmInit();
 
@@ -29,7 +29,7 @@ void ClientInfo::BtnTitleInit()
 	auto* topSz = new wxBoxSizer(wxHORIZONTAL);
 	m_TopPanel->SetSizer(topSz);
 	topSz->AddStretchSpacer();
-	auto* btnExit = new wxButton(m_TopPanel, wxID_EXIT, "종료");
+	auto* btnExit = new wxButton(m_TopPanel, wxID_EXIT, "나가기");
 	topSz->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
 	auto* line = new wxStaticLine(m_panel, wxID_ANY);
 
@@ -50,7 +50,7 @@ void ClientInfo::LeftBodyInit()
 
     InfoTitleInit();
 
-	shell->Add(m_bodySizer);
+   shell->Add(m_bodySizer);
 }
 
 void ClientInfo::RightBodyInit()
@@ -77,8 +77,14 @@ void ClientInfo::RightBodyInit()
     auto* title = new wxStaticText(right, wxID_ANY, "[기본정보]");
     TitleFontInit(title);
 
+    auto* btnAdd = new wxButton(right, wxID_EXIT, "추가");
+    auto* btnExit = new wxButton(right, wxID_EXIT, "취소");
+    
     topL->Add(title, 0, wxALIGN_CENTER_VERTICAL);
+
     topL->AddStretchSpacer();
+    topL->Add(btnAdd, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+    topL->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
 
     // ★ 오른쪽과 같은 높이 부여
     topL->SetMinSize(wxSize(-1, kTopBarH));
@@ -228,9 +234,7 @@ void ClientInfo::InfoTitleInit()
     topH->Add(Ltitle, 0, wxLEFT | wxTOP | wxRIGHT | wxBOTTOM, 8);
 
     topH->AddStretchSpacer();
-    auto* btnSave = new wxButton(m_LeftPanel, wxID_SAVE, "추가");
     auto* btnExit = new wxButton(m_LeftPanel, wxID_EXIT, "삭제");
-    topH->Add(btnSave, 0, wxALL, 8);
     topH->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
 
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가

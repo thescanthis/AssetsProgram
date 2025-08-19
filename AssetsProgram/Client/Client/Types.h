@@ -2,6 +2,8 @@
 #include <wx/wx.h>
 #include <wx/grid.h>
 
+class TemplateFunc;
+
 using BYTE = unsigned char;
 using int8 = __int8;
 using int16 = __int16;
@@ -30,3 +32,5 @@ struct C_Details
 	wxString C_Type;
 	wxString C_Item;
 };
+
+extern TemplateFunc* Template;

@@ -1,19 +1,14 @@
 #pragma once
-#include "WidgetParent.h"
-
-class wxTreeCtrl;
-
-class InventoryAdd : public WidgetParent
+class InventoryAdd : public wxFrame
 {
 public:
-	explicit InventoryAdd(wxWindow* parent = nullptr, const wxString Title = "");
+	InventoryAdd();
 	virtual ~InventoryAdd();
 
-public:
-	virtual void BtnTitleInit() override;
-	virtual void LeftBodyInit() override;
-	virtual void InfoTitleInit() override;
-	virtual void RightBodyInit() override;
 private:
+	void ScreenInit();
+private:
+	wxPanel* m_panel = nullptr;
+	wxBoxSizer* frameSizer = nullptr;
 };
 

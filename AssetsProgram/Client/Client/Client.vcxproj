@@ -148,7 +148,9 @@
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="MaskedTextCtrl.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ProductInfo.h" />
     <ClInclude Include="SubFrame.h" />
+    <ClInclude Include="TemplateFunc.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="WidgetParent.h" />
   </ItemGroup>
@@ -166,6 +168,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ProductInfo.cpp" />
     <ClCompile Include="SubFrame.cpp" />
     <ClCompile Include="WidgetParent.cpp" />
   </ItemGroup>

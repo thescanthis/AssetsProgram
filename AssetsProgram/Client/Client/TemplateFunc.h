@@ -1,0 +1,41 @@
+#pragma once
+#include <functional>
+
+class TemplateFunc {
+public:
+    TemplateFunc() {}
+    ~TemplateFunc() {
+        singletons_.clear();
+    }
+public:
+    template<class WinT, class... Args>
+    std::function<void()> MakeSingletonOpener(wxWindow* parent, Args&&... args) {
+        auto args_tuple = std::make_tuple(std::forward<Args>(args)...);
+
+        return [this, parent, args_tuple]() mutable {
+            auto& ptr = singletons_[std::type_index(typeid(WinT))];
+            if (ptr && ptr->IsBeingDeleted()) ptr = nullptr;
+
+            if (!ptr) {
+                ptr = std::apply([&](auto&&... as) {
+                    return static_cast<wxWindow*>(new WinT(parent, std::forward<decltype(as)>(as)...));
+                    }, args_tuple);
+
+                ptr->Bind(wxEVT_CLOSE_WINDOW, [](wxCloseEvent& e) { e.Skip(); });
+                ptr->Bind(wxEVT_DESTROY, [this](wxWindowDestroyEvent& ev) {
+
+                    wxWindow* w = static_cast<wxWindow*>(ev.GetEventObject());
+
+                    if (!singletons_.empty()) {
+                        for (auto& kv : singletons_) if (kv.second == w) { kv.second = nullptr; break; }
+                    }
+                    });
+            }
+            if (!ptr->IsShown()) ptr->Show();
+            ptr->Raise();
+            };
+    };
+
+public:
+    std::unordered_map<std::type_index, wxWindow*> singletons_;
+};
