@@ -9,7 +9,6 @@
 #include <windows.h>
 #include <iostream>
 #include <assert.h>
-#include <array>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
@@ -30,12 +29,14 @@
 
 #include <functional>
 #include "TemplateFunc.h"
+#include "WidgetUtilsFunc.h"
 
 #include <winsock2.h>
 #include <mswsock.h>
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
+using namespace std;
 #if _DEBUG
 #pragma comment (lib,"wxbase32ud.lib")
 #pragma comment (lib,"wxbase32ud_net.lib")

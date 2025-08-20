@@ -19,6 +19,12 @@
     <Filter Include="SubFrame">
       <UniqueIdentifier>{843ebbd5-d4d0-4826-885f-ad4d325df9a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inventory">
+      <UniqueIdentifier>{3ef71416-83f1-4a9e-967b-72caa18db305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Company">
+      <UniqueIdentifier>{ca967747-5c31-412c-bb0c-cb64891f7258}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -33,13 +39,7 @@
     <ClInclude Include="SubFrame.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
-    <ClInclude Include="CompanyInfo.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
     <ClInclude Include="CopyFrame.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
-    <ClInclude Include="CompanyInfoDetail.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
     <ClInclude Include="MaskedTextCtrl.h">
@@ -48,19 +48,31 @@
     <ClInclude Include="ClientInfo.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
-    <ClInclude Include="InventorySearch.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
     <ClInclude Include="WidgetParent.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
     <ClInclude Include="ProductInfo.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
-    <ClInclude Include="InventoryAdd.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
     <ClInclude Include="TemplateFunc.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryAdd.h">
+      <Filter>Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InventorySearch.h">
+      <Filter>Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory_ClickInfo.h">
+      <Filter>Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="CompanyInfo.h">
+      <Filter>Company</Filter>
+    </ClInclude>
+    <ClInclude Include="CompanyInfoDetail.h">
+      <Filter>Company</Filter>
+    </ClInclude>
+    <ClInclude Include="WidgetUtilsFunc.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,22 +89,13 @@
     <ClCompile Include="SubFrame.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
-    <ClCompile Include="CompanyInfo.cpp">
-      <Filter>SubFrame</Filter>
-    </ClCompile>
     <ClCompile Include="CopyFrame.cpp">
-      <Filter>SubFrame</Filter>
-    </ClCompile>
-    <ClCompile Include="CompanyInfoDetail.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
     <ClCompile Include="MaskedTextCtrl.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ClientInfo.cpp">
-      <Filter>SubFrame</Filter>
-    </ClCompile>
-    <ClCompile Include="InventorySearch.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
     <ClCompile Include="WidgetParent.cpp">
@@ -102,7 +105,19 @@
       <Filter>SubFrame</Filter>
     </ClCompile>
     <ClCompile Include="InventoryAdd.cpp">
-      <Filter>SubFrame</Filter>
+      <Filter>Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySearch.cpp">
+      <Filter>Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory_ClickInfo.cpp">
+      <Filter>Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="CompanyInfo.cpp">
+      <Filter>Company</Filter>
+    </ClCompile>
+    <ClCompile Include="CompanyInfoDetail.cpp">
+      <Filter>Company</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

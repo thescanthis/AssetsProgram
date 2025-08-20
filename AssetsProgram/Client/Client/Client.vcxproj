@@ -145,6 +145,7 @@
     <ClInclude Include="CopyFrame.h" />
     <ClInclude Include="InventoryAdd.h" />
     <ClInclude Include="InventorySearch.h" />
+    <ClInclude Include="Inventory_ClickInfo.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="MaskedTextCtrl.h" />
     <ClInclude Include="pch.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="SubFrame.h" />
     <ClInclude Include="TemplateFunc.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="WidgetUtilsFunc.h" />
     <ClInclude Include="WidgetParent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +163,7 @@
     <ClCompile Include="CopyFrame.cpp" />
     <ClCompile Include="InventoryAdd.cpp" />
     <ClCompile Include="InventorySearch.cpp" />
+    <ClCompile Include="Inventory_ClickInfo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="MaskedTextCtrl.cpp" />

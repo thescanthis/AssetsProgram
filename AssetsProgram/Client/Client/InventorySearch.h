@@ -19,7 +19,12 @@ public:
 
 private:
 	void BtnAddInventory(wxCommandEvent& event);
+	void BtnDelInventory(wxCommandEvent& event);
+	void BtnDeliveryNote(wxCommandEvent& event);
 
+
+private:
+	void GridClickEvent(wxGridEvent& e);
 protected:
 
 	wxBoxSizer* shell = nullptr;

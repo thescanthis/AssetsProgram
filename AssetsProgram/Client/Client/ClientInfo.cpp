@@ -244,19 +244,7 @@ void ClientInfo::InfoTitleInit()
     grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
     grid->SetSizeHints(400, 450, 400, 450); // = Min=Max=465x283
 
-    // 컬럼 라벨
-    grid->SetColLabelValue(0, "");
-    grid->SetColLabelValue(1, "회사명");
-    grid->SetColLabelValue(2, "사업자번호");
-    grid->SetColLabelValue(3, "대표자명");
-
-    // 모양/동작 기본값
-    grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
-    grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    grid->EnableGridLines(true);
-    grid->SetRowLabelSize(40);
-    grid->SetColLabelSize(28);
-    grid->SetDefaultRowSize(24);
+    GridLabelInitilize(grid, C_LabelStr);
 
     // 예시 데이터(원하면 제거)
     grid->SetCellValue(0, 0, "");
@@ -265,10 +253,7 @@ void ClientInfo::InfoTitleInit()
     grid->SetCellValue(0, 3, "김기종");
     grid->AutoSizeColumns();
 
-    grid->SetColSize(0, 30);
-    grid->SetColSize(1, 170);
-    grid->SetColSize(2, 90);
-    grid->SetColSize(3, 50);
+    GridColumnInitilize(grid, C_gridWid);
 
     LeftSz->Add(grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 

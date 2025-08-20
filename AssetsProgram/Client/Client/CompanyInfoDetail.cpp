@@ -128,34 +128,20 @@ void CompanyInfoDetail::RightBodyInit()
     rightSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
 
     m_grid = new wxGrid(m_RightPanel, wxID_ANY);
-    m_grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
+    m_grid->CreateGrid(20, 5);                    // 초기 10행 5열 (원하면 바꿔도 OK)
     m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
 
-    // 컬럼 라벨
-    m_grid->SetColLabelValue(0, InventoryTitle[M_CLASS]);
-    m_grid->SetColLabelValue(1, InventoryTitle[I_CLASS]);
-    m_grid->SetColLabelValue(2, InventoryTitle[P_CLASS]);
-    m_grid->SetColLabelValue(3, InventoryTitle[IS_CLASS]);
-
-    // 모양/동작 기본값
-    m_grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
-    m_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    m_grid->EnableGridLines(true);
-    m_grid->SetRowLabelSize(40);
-    m_grid->SetColLabelSize(28);
-    m_grid->SetDefaultRowSize(24);
+    GridLabelInitilize(m_grid, P_LabelStr);
     
     // 예시 데이터(원하면 제거)
-    m_grid->SetCellValue(0, 0, "A-12");
-    m_grid->SetCellValue(0, 1, "C-123456788");
-    m_grid->SetCellValue(0, 2, "무전통신기-X025");
-    m_grid->SetCellValue(0, 3, "123456");
+    m_grid->SetCellValue(0, 0, "");
+    m_grid->SetCellValue(0, 1, "A-12");
+    m_grid->SetCellValue(0, 2, "C-123456788");
+    m_grid->SetCellValue(0, 3, "무전통신기-X025");
+    m_grid->SetCellValue(0, 4, "123456");
     m_grid->AutoSizeColumns();
 
-    m_grid->SetColSize(0, 70);
-    m_grid->SetColSize(1, 140);
-    m_grid->SetColSize(2, 140);
-    m_grid->SetColSize(3, 70);
+    GridColumnInitilize(m_grid, P_gridWid);
 
     rightSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 

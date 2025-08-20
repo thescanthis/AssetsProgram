@@ -26,6 +26,8 @@ protected:
 		IS_CLASS = 6  // ITEM_SEND
 	};
 
+	const int32 InventoryPick[5] = { B_CLASS,M_CLASS ,I_CLASS ,P_CLASS, IS_CLASS };
+
 	std::array<wxString, 7> InventoryTitle = {
 		"사업분류",
 		"자제실분류",
@@ -35,6 +37,7 @@ protected:
 		"단위",
 		"입고량"
 	};
+
 protected:
 	C_Details Infomation;
 	wxPanel* m_panel, * m_TopPanel, * m_LeftPanel, * m_RightPanel;

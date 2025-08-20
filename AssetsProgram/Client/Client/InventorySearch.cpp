@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "InventorySearch.h"
 #include "InventoryAdd.h"
+#include "Inventory_ClickInfo.h"
 
 #define MAX_SCREEN_X 1145
 #define MAX_SCREEN_Y 600
@@ -74,9 +75,11 @@ void InventorySearch::LeftBottomInit()
 	// 2) 위젯들(버튼)
 	auto* AssetAdd = new wxButton(m_LeftBottmPanel, wxID_ANY, "재고자산 추가");
 	auto* AssetDel = new wxButton(m_LeftBottmPanel, wxID_ANY, "재고자산 삭제");
+	auto* AssetDeliveryNote = new wxButton(m_LeftBottmPanel, wxID_ANY, "출고증 출력");
 
 	bottomSz->Add(AssetAdd, 0, wxEXPAND | wxBOTTOM, 4);
 	bottomSz->Add(AssetDel, 0, wxEXPAND | wxBOTTOM, 4 );
+	bottomSz->Add(AssetDeliveryNote, 0, wxEXPAND | wxBOTTOM, 4);
 
 	// 3) m_LeftPanel의 시저(leftRoot)에 추가해야 함!
 	auto* leftRoot = wxDynamicCast(m_LeftPanel->GetSizer(), wxBoxSizer);
@@ -86,6 +89,8 @@ void InventorySearch::LeftBottomInit()
 	m_bodySizer->Add(m_LeftPanel, 0, wxEXPAND);
 
 	AssetAdd->Bind(wxEVT_BUTTON, &InventorySearch::BtnAddInventory, this);
+	AssetDel->Bind(wxEVT_BUTTON, &InventorySearch::BtnDelInventory, this);
+	AssetDeliveryNote->Bind(wxEVT_BUTTON, &InventorySearch::BtnDeliveryNote, this);
 }
 
 void InventorySearch::InfoTitleInit()
@@ -112,52 +117,52 @@ void InventorySearch::RightBodyInit()
 	auto* rightRoot = new wxBoxSizer(wxVERTICAL);
 	m_RightPanel->SetSizer(rightRoot);
 
-	wxString LabelStr[8] = { "상품명","날짜","재고번호","거래처","수량","단위","재고분류","사업명" };
 	int size = sizeof(LabelStr) / sizeof(wxString);
 
 	m_grid = new wxGrid(m_RightPanel, wxID_ANY);
 	m_grid->CreateGrid(30, size);                    // 초기 10행 5열 (원하면 바꿔도 OK)
 	m_grid->SetSizeHints(MAX_SCREEN_X - TREE_SIZE_X, 550, MAX_SCREEN_X - TREE_SIZE_X, 550);
 
-	// 그리드 만든 뒤
-	m_grid->SetDefaultCellAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
-
-	// 헤더(라벨)도 가운데
-	m_grid->SetColLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
-	m_grid->SetRowLabelAlignment(wxALIGN_CENTER, wxALIGN_CENTER);
-
-	// 컬럼 라벨
-
-	for (int32 i = 0; i < size; i++)
-		m_grid->SetColLabelValue(i, LabelStr[i]);
-
-	// 모양/동작 기본값
-	m_grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
-	m_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-	m_grid->EnableGridLines(true);
-	m_grid->SetRowLabelSize(40);
-	m_grid->SetColLabelSize(28);
-	m_grid->SetDefaultRowSize(24);
+	GridLabelInitilize(m_grid, LabelStr);
 
 	wxString Data[9] = { "무전기","24.10.27","AND-MES-B001~B008","휘온정보통신회사","8","EA","입고","마넷통신체계" };
 	for (int32 i = 0; i < size; i++)
 		m_grid->SetCellValue(0,i, Data[i]);
 
-	int32 wid[8] = { 140,70,140,210,70,70,70,180};
-	for (int i = 0; i < size; i++)
-		m_grid->SetColSize(i, wid[i]);
-
-	//m_grid->AutoSizeColumns();
+	GridColumnInitilize(m_grid, wid);
 
 	rightRoot->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 
 	// ★ 본문 H-BoxSizer에 순서대로 추가: Left | vline | Right
 	m_bodySizer->Add(vline, 0, wxEXPAND | wxALL, 4);
 	m_bodySizer->Add(m_RightPanel, 1, wxEXPAND | wxALL, 4);
+
+	m_grid->Bind(wxEVT_GRID_CELL_LEFT_DCLICK, &InventorySearch::GridClickEvent, this);
 }
 
 void InventorySearch::BtnAddInventory(wxCommandEvent& event)
 {
 	AddInven = new InventoryAdd();
 	AddInven->Show();
+}
+
+void InventorySearch::BtnDelInventory(wxCommandEvent& event)
+{
+	wxMessageBox("asdad");
+}
+
+void InventorySearch::BtnDeliveryNote(wxCommandEvent& event)
+{
+	wxMessageBox("asdad");
+}
+
+void InventorySearch::GridClickEvent(wxGridEvent& e)
+{
+	int32 Row = e.GetRow();
+	int32 Rows = m_grid->GetNumberRows();
+	int32 Cols = m_grid->GetNumberCols();
+
+	Inventory_ClickInfo* ClickInfo = new  Inventory_ClickInfo({ MAX_SCREEN_X - TREE_SIZE_X, 600});
+	ClickInfo->Show();
+	e.Skip();
 }

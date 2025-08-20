@@ -9,7 +9,7 @@ ProductInfo::ProductInfo(wxWindow* parent, const wxString Title)
     // 메인 패널
     auto* shell = new wxBoxSizer(wxVERTICAL);
     m_panel->SetSizer(shell);
-
+    
     // 저장 나가기 공간
     BtnTitleInit();
     auto* line = new wxStaticLine(m_panel, wxID_ANY);
@@ -34,6 +34,113 @@ ProductInfo::ProductInfo(wxWindow* parent, const wxString Title)
 }
 ProductInfo::~ProductInfo()
 {
+}
+
+void ProductInfo::BtnProductAdd(wxCommandEvent& event)
+{
+    int32 size = InfoEdit.size();
+    C_Details Temp;
+
+    for (int32 j = 0; j < size; j++)
+    {
+        wxString str = InfoEdit[j]->GetValue();
+        Temp.CompanyInfoArr[j] = str;
+    }
+    string Title = static_cast<string>(InfoEdit[3]->GetValue().c_str());
+    ProductInfos[Title].push_back(Temp);
+
+    GridInfoAdd(Title);
+}
+
+void ProductInfo::BtnProductCancel(wxCommandEvent& event)
+{
+    for (int32 i = 0; i < InfoEdit.size(); i++)
+        InfoEdit[i]->Clear();
+}
+
+void ProductInfo::GridInfoAdd(string title)
+{
+    if (m_grid->GetNumberRows() < ProductInfos.size())
+    {
+        int32 size = ProductInfos.size() - m_grid->GetNumberRows();
+        for(int32 i=0; i<size; i++)
+            m_grid->AppendRows(1);
+    }  
+
+    int32 ItemNum = 0;
+    std::vector<string> EndInfo;
+    for (auto Details : ProductInfos[title])
+    {
+        string temp, temp1, temp2;
+        temp = temp1 = temp2 = "";
+        map<string, int32> TMap,TMap1;
+
+        for (int i = 0; i < ProductInfos[title].size(); i++)
+        {
+            C_Details& detail = ProductInfos[title][i];
+            temp1 = static_cast<string>(detail.CompanyInfoArr[detail.C_Numbering].c_str());
+            temp2 = static_cast<string>(detail.CompanyInfoArr[detail.Corp_Numbering].c_str());
+            temp = static_cast<string>(detail.CompanyInfoArr[detail.C_Item].c_str());
+
+            TMap[temp1]++;
+            TMap1[temp2]++;
+
+            InvenNames.push_back(TMap);
+            InvenNames1.push_back(TMap1);
+
+            ItemNum += (temp.empty()) ? 0 : stoi(temp);
+        }
+
+        std::string Numbering = static_cast<string>(Details.CompanyInfoArr[Details.C_Numbering].c_str());
+        std::string Numbering1 = static_cast<string>(Details.CompanyInfoArr[Details.Corp_Numbering].c_str());
+        temp = TMap.size() > 1 ? Numbering +"외" + to_string(TMap.size()-1)+"개" : Numbering;
+        temp1 = TMap1.size() > 1 ? Numbering1 + "외" + to_string(TMap1.size()-1)+"개" : Numbering1;
+
+        EndInfo.push_back(title);
+        EndInfo.push_back(temp);
+        EndInfo.push_back(temp1);
+        EndInfo.push_back(static_cast<string>(Details.CompanyInfoArr[Details.CorpPerson].c_str()));
+        EndInfo.push_back(to_string(ItemNum));
+
+        break;
+    }
+
+
+    for (int32 i = 0; i < m_grid->GetNumberCols(); i++)
+    {
+        wxString temp = EndInfo[i];
+        m_grid->SetCellValue(ProductInfos.size()-1,i,temp);
+    }
+    
+
+    //std::vector<C_Details> temp = ProductInfos[title].at(0).;
+    //for (int32 i = 0; i < m_grid->GetNumberCols(); i++)
+    //    m_grid->SetCellValue(ProductInfos.size() - 1, i, temp[]);
+
+    //1. Lock
+    //2. Validate Check
+    //3. DB ADD
+
+    m_grid->Refresh();
+}
+
+void ProductInfo::BtnGridInfoDel(wxCommandEvent& event)
+{
+    //1. Lock
+    //2. Validate Check
+    //3. DB ADD
+    if (m_gridRow < 0)
+        return;
+   // ProductInfos.erase(ProductInfos.begin() + m_gridRow, ProductInfos.begin() + m_gridRow + 1);
+
+    m_grid->DeleteRows(m_gridRow);
+    m_grid->Refresh();
+}
+
+void ProductInfo::GridClickEvent(wxGridEvent& e)
+{
+    m_gridRow = e.GetRow();
+    e.Skip();
 }
 
 void ProductInfo::BtnTitleInit()
@@ -125,6 +232,9 @@ void ProductInfo::InfoTitleInit()
 
     auto* leftRoot = wxDynamicCast(m_LeftPanel->GetSizer(), wxBoxSizer);
     leftRoot->Add(left, 1, wxEXPAND);
+
+    btnAdd->Bind(wxEVT_BUTTON, &ProductInfo::BtnProductAdd, this);
+    btnExit->Bind(wxEVT_BUTTON, &ProductInfo::BtnProductCancel, this);
 }
 
 void ProductInfo::RightBodyInit()
@@ -146,45 +256,34 @@ void ProductInfo::RightBodyInit()
     topH->Add(rtitle, 0, wxLEFT | wxTOP | wxRIGHT | wxBOTTOM, 8);
 
     topH->AddStretchSpacer();
-    auto* btnExit = new wxButton(m_RightPanel, wxID_EXIT, "삭제");
-    topH->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+    auto* btnDel = new wxButton(m_RightPanel, wxID_EXIT, "삭제");
+    topH->Add(btnDel, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
 
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
     rightSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
 
     m_grid = new wxGrid(m_RightPanel, wxID_ANY);
-    m_grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
+    m_grid->CreateGrid(20, 5);                    // 초기 10행 5열 (원하면 바꿔도 OK)
     m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
+    
+    GridLabelInitilize(m_grid, P_LabelStr);
 
-    // 컬럼 라벨
-    m_grid->SetColLabelValue(0, InventoryTitle[M_CLASS]);
-    m_grid->SetColLabelValue(1, InventoryTitle[I_CLASS]);
-    m_grid->SetColLabelValue(2, InventoryTitle[P_CLASS]);
-    m_grid->SetColLabelValue(3, InventoryTitle[IS_CLASS]);
-
-    // 모양/동작 기본값
-    m_grid->EnableEditing(false);                 // 읽기 전용(원하면 true)
-    m_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    m_grid->EnableGridLines(true);
-    m_grid->SetRowLabelSize(40);
-    m_grid->SetColLabelSize(28);
-    m_grid->SetDefaultRowSize(24);
-
-    // 예시 데이터(원하면 제거)
-    m_grid->SetCellValue(0, 0, "A-12");
-    m_grid->SetCellValue(0, 1, "C-123456788");
-    m_grid->SetCellValue(0, 2, "무전통신기-X025");
-    m_grid->SetCellValue(0, 3, "123456");
+    // 예시 데이터(원하면 제거) DB에서 긁어오는 데이터
+    m_grid->SetCellValue(0, 0, "");
+    m_grid->SetCellValue(0, 1, "A-12");
+    m_grid->SetCellValue(0, 2, "C-123456788");
+    m_grid->SetCellValue(0, 3, "무전통신기-X025");
+    m_grid->SetCellValue(0, 4, "123456");
     m_grid->AutoSizeColumns();
 
-    m_grid->SetColSize(0, 70);
-    m_grid->SetColSize(1, 140);
-    m_grid->SetColSize(2, 140);
-    m_grid->SetColSize(3, 70);
+    GridColumnInitilize(m_grid, P_gridWid);
 
     rightSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);
 
 
     m_bodySizer->Add(vline, 0, wxEXPAND);
     m_bodySizer->Add(m_RightPanel, 1, wxEXPAND);
+
+    m_grid->Bind(wxEVT_GRID_CELL_LEFT_CLICK, &ProductInfo::GridClickEvent, this);
+    btnDel->Bind(wxEVT_BUTTON, &ProductInfo::BtnGridInfoDel, this);
 }
