@@ -42,7 +42,7 @@ Frame(CompanyInfoDetail)
 
 CompanyInfoDetail::CompanyInfoDetail(wxWindow* parent, const wxString Title) : WidgetParent(parent, Title)
 {
-	SetSizeHints(800, 400, 800, 400);         // 고정 크기(원하면 제거)
+	SetSizeHints(400, 390, 400, 390);         // 고정 크기(원하면 제거)
 
     // 메인 패널
     auto* shell = new wxBoxSizer(wxVERTICAL);
@@ -65,7 +65,7 @@ CompanyInfoDetail::CompanyInfoDetail(wxWindow* parent, const wxString Title) : W
 
 	// 프레임 채우기
 	auto* frameSizer = new wxBoxSizer(wxVERTICAL);
-	frameSizer->Add(m_panel, 1, wxEXPAND);
+	frameSizer->Add(m_panel, 1, wxEXPAND,10);
 	SetSizer(frameSizer);
 	Layout();
 	Center();
@@ -89,7 +89,7 @@ void CompanyInfoDetail::BtnTitleInit()
 
 void CompanyInfoDetail::LeftBodyInit()
 {
-    m_LeftPanel->SetSizeHints(300, -1, 300, -1);      // 폭 300 고정
+    m_LeftPanel->SetSizeHints(400, -1, 400, -1);      // 폭 300 고정
 
     // 왼쪽 패널 내부용 세로 sizer
     auto* leftRoot = new wxBoxSizer(wxVERTICAL);
@@ -102,52 +102,7 @@ void CompanyInfoDetail::LeftBodyInit()
 
 void CompanyInfoDetail::RightBodyInit()
 {
-    // 세로 구분선 (부모는 m_panel — m_bodySizer가 붙은 윈도우와 동일)
-    auto* vline = new wxStaticLine(
-        m_panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
-    
-    // 오른쪽 내부 sizer
-    auto* rightSz = new wxBoxSizer(wxVERTICAL);
-    m_RightPanel->SetSizer(rightSz);
 
-    auto* topH = new wxBoxSizer(wxHORIZONTAL);
-
-    // ★ [거래처정보] 제목 (왼쪽과 동일한 스타일)
-    auto* rtitle = new wxStaticText(m_RightPanel, wxID_ANY, "[자제실 정보]");
-    { wxFont f = rtitle->GetFont(); f.MakeBold(); rtitle->SetFont(f); }
-    rtitle->SetForegroundColour(wxColour(80, 80, 120));
-    topH->Add(rtitle, 0, wxLEFT |wxTOP | wxRIGHT | wxBOTTOM, 8);
-
-    topH->AddStretchSpacer();
-    //auto* btnSave = new wxButton(m_RightPanel, wxID_SAVE, "추가");
-    //auto* btnExit = new wxButton(m_RightPanel, wxID_EXIT, "삭제");
-    //topH->Add(btnSave, 0, wxALL, 8);
-    //topH->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
-
-    // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
-    rightSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
-
-    m_grid = new wxGrid(m_RightPanel, wxID_ANY);
-    m_grid->CreateGrid(20, 5);                    // 초기 10행 5열 (원하면 바꿔도 OK)
-    m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
-
-    GridLabelInitilize(m_grid, P_LabelStr);
-    
-    // 예시 데이터(원하면 제거)
-    m_grid->SetCellValue(0, 0, "");
-    m_grid->SetCellValue(0, 1, "A-12");
-    m_grid->SetCellValue(0, 2, "C-123456788");
-    m_grid->SetCellValue(0, 3, "무전통신기-X025");
-    m_grid->SetCellValue(0, 4, "123456");
-    m_grid->AutoSizeColumns();
-
-    GridColumnInitilize(m_grid, P_gridWid);
-
-    rightSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
-
-    // ★ 본문 H-BoxSizer에 순서대로 추가: Left | vline | Right
-    m_bodySizer->Add(vline, 0, wxEXPAND);
-    m_bodySizer->Add(m_RightPanel, 1, wxEXPAND);
 }
 
 void CompanyInfoDetail::InfoTitleInit()

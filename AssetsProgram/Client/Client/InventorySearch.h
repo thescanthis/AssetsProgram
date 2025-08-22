@@ -28,7 +28,8 @@ private:
 protected:
 
 	wxBoxSizer* shell = nullptr;
-
+	
+	wxPanel* m_RightPanel;
 	wxPanel* m_RightTopPanel;
 	wxPanel* m_LeftBottmPanel;
 

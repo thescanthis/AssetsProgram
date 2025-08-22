@@ -1,5 +1,4 @@
 #pragma once
-#include "MaskedTextCtrl.h"
 #include "WidgetParent.h"
 class WidgetParent : public wxFrame
 {
@@ -13,34 +12,42 @@ public:
 	virtual void RightBodyInit() = 0;
 
 protected:
+	std::array<const wxString, 9> InventoryTitle = {
+	"상품코드",
+	"상품명",
+	"단위",
+	"판매단가",
+	"구매단가",
+	"상품그룹",
+	"메모",
+	"판매처",
+	"자재실"
+	};
+
+	std::array<const wxString, 14> ClientInfoTitle = {
+		"거래처구분",
+		"거래구분",
+		",",
+		"회사명",
+		"사업자등록번호",
+		"법인등록번호",
+		"대표자명",
+		"사업장주소",
+		"업태",
+		"종목",
+		",",
+		"연락처",
+		"팩스번호",
+		"이메일"
+	};
 	void TitleFontInit(wxStaticText* title,int AddFontSize=0);
-
-	enum
-	{
-		B_CLASS = 0,  // Business
-		M_CLASS = 1,  // Material
-		I_CLASS = 2,  // Inventory
-		P_CLASS = 3,  // PRODUCT
-		UP_CLASS = 4, // UNIT PRICE
-		U_CLASS = 5,  // UINT
-		IS_CLASS = 6  // ITEM_SEND
-	};
-
-	const int32 InventoryPick[5] = { B_CLASS,M_CLASS ,I_CLASS ,P_CLASS, IS_CLASS };
-
-	std::array<wxString, 7> InventoryTitle = {
-		"사업분류",
-		"자제실분류",
-		"재고번호",
-		"상품명",
-		"구매단가",
-		"단위",
-		"입고량"
-	};
+	void OnCharHook(wxKeyEvent& key);
+	void addRow(wxPanel* panel, wxBoxSizer* fields, const wxString& Label, wxWindow* editor);
+	wxTextCtrl* makeEdit(wxPanel* panel,const wxString& hint, const bool EnableText=false);
 
 protected:
 	C_Details Infomation;
-	wxPanel* m_panel, * m_TopPanel, * m_LeftPanel, * m_RightPanel;
+	wxPanel* m_panel, * m_TopPanel, * m_LeftPanel;
 	wxBoxSizer* m_bodySizer = nullptr;   // 본문(좌우) 배치용 H sizer
 
 	std::vector<wxStaticText*> InfoTitle;

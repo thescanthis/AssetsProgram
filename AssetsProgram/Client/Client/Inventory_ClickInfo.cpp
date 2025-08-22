@@ -70,7 +70,7 @@ void Inventory_ClickInfo::DownBody()
     m_grid = new wxGrid(m_panel, wxID_ANY);
     m_grid->CreateGrid(30, size); // 필요에 맞게 조정
 
-    GridLabelInitilize(m_grid, LabelStr);
+    WU::GridLabelInitilize(m_grid, LabelStr);
     
     int32 InvenSize = InvenDetails.size();
     for (int32 i = 0; i < InvenSize; i++)
@@ -78,7 +78,7 @@ void Inventory_ClickInfo::DownBody()
         
     }
 
-    GridColumnInitilize(m_grid, wid);
+    WU::GridColumnInitilize(m_grid, wid);
 
     root->Add(m_grid, 1, wxEXPAND|wxALL,8); // ← 남는 공간 전부 그리드로
 }

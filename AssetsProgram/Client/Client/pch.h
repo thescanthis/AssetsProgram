@@ -4,10 +4,18 @@
 #include <wx/dcbuffer.h>
 #include <wx/statline.h>
 #include <wx/treectrl.h>
+#include <wx/notebook.h>
+#include <wx/srchctrl.h>
+#include <wx/accel.h>
+#include <wx/sysopt.h>
+#include <wx/settings.h>
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 #include "Types.h"
 
 #include <windows.h>
 #include <iostream>
+#include <iterator>
 #include <assert.h>
 #include <vector>
 #include <unordered_map>
@@ -26,17 +34,17 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-
 #include <functional>
+
 #include "TemplateFunc.h"
 #include "WidgetUtilsFunc.h"
+#include "DBTest.h"
 
 #include <winsock2.h>
 #include <mswsock.h>
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
-using namespace std;
 #if _DEBUG
 #pragma comment (lib,"wxbase32ud.lib")
 #pragma comment (lib,"wxbase32ud_net.lib")

@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "MainFrame.h"
 
-TemplateFunc* Template = nullptr;
+TemplateFunc* G_Template = nullptr;
+DBTest* DBMaps = nullptr;
 
 class MyApp : public wxApp {
 public:
@@ -9,7 +10,8 @@ public:
         _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);  // 자동 릭 체크
         wxInitAllImageHandlers(); // wxImage용 초기화
 
-        Template = new TemplateFunc();
+        G_Template = new TemplateFunc();
+        DBMaps = new DBTest();
 
         frame = new MainFrame();
         frame->Show();
@@ -19,7 +21,8 @@ public:
     }
 
     virtual int OnExit() override {
-        delete Template;
+        delete G_Template;
+        delete DBMaps;
         wxImage::CleanUpHandlers(); // 정리 작업
         return wxApp::OnExit();
     }

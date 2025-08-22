@@ -13,6 +13,9 @@
 InventorySearch::InventorySearch(wxWindow* parent, const wxString Title) 
 	: WidgetParent(parent, Title)
 {
+	m_RightPanel = new wxPanel(m_panel, wxID_ANY);
+	m_RightPanel->SetBackgroundColour(*wxWHITE);
+
 	SetSizeHints(MAX_SCREEN_X, MAX_SCREEN_Y, MAX_SCREEN_X, MAX_SCREEN_Y);         // 고정 크기(원하면 제거)
 
 	shell = new wxBoxSizer(wxVERTICAL);
@@ -123,13 +126,13 @@ void InventorySearch::RightBodyInit()
 	m_grid->CreateGrid(30, size);                    // 초기 10행 5열 (원하면 바꿔도 OK)
 	m_grid->SetSizeHints(MAX_SCREEN_X - TREE_SIZE_X, 550, MAX_SCREEN_X - TREE_SIZE_X, 550);
 
-	GridLabelInitilize(m_grid, LabelStr);
+	WU::GridLabelInitilize(m_grid, LabelStr);
 
 	wxString Data[9] = { "무전기","24.10.27","AND-MES-B001~B008","휘온정보통신회사","8","EA","입고","마넷통신체계" };
 	for (int32 i = 0; i < size; i++)
 		m_grid->SetCellValue(0,i, Data[i]);
 
-	GridColumnInitilize(m_grid, wid);
+	WU::GridColumnInitilize(m_grid, wid);
 
 	rightRoot->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 

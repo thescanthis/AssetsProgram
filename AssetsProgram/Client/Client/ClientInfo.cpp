@@ -1,11 +1,13 @@
 ﻿#include "pch.h"
 #include "ClientInfo.h"
+#include "ClientDetailInfo.h"
+#include "ClientOrderInput.h"
 
 ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : WidgetParent(parent,Title)
 {
-	SetSizeHints(800, 600, 800, 600);         // 고정 크기(원하면 제거)
-	//m_panel = new wxPanel(this, wxID_ANY);
-	//m_panel->SetBackgroundColour(*wxWHITE);
+	SetSizeHints(770, 600, 770, 600);         // 고정 크기(원하면 제거)
+    m_RightPanel = new wxPanel(m_panel, wxID_ANY);
+    m_RightPanel->SetBackgroundColour(*wxWHITE);
 
 	// 메인 패널
 	shell = new wxBoxSizer(wxVERTICAL);
@@ -14,7 +16,6 @@ ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : WidgetParent(pa
 	BtnTitleInit();
     LeftBodyInit();
     RightBodyInit();
-    RightBottmInit();
 
 	Center();
 }
@@ -24,24 +25,57 @@ ClientInfo::~ClientInfo()
 
 }
 
+void ClientInfo::BtnClientAdd(wxCommandEvent& event)
+{
+    G_Template->MakeSingletonOpener<ClientDetailInfo>(this, "거래처등록")();
+}
+
+void ClientInfo::BtnClientChange(wxCommandEvent& event)
+{
+    G_Template->MakeSingletonOpener<ClientDetailInfo>(this, "거래처수정")();
+}
+
+void ClientInfo::BtnClientCancel(wxCommandEvent& event)
+{
+    this->Close();
+}
+
+void ClientInfo::GridClickEvent(wxGridEvent& e)
+{
+    int32 Row = e.GetRow();
+    int32 Rows = m_grid->GetNumberRows();
+    int32 Cols = m_grid->GetNumberCols();
+
+    G_Template->MakeSingletonOpener<ClientDetailInfo>(this, "거래처수정")();
+    e.Skip();
+}
+
 void ClientInfo::BtnTitleInit()
 {
 	auto* topSz = new wxBoxSizer(wxHORIZONTAL);
 	m_TopPanel->SetSizer(topSz);
 	topSz->AddStretchSpacer();
+
+    auto* btnAdd = new wxButton(m_TopPanel, wxID_EXIT, "등록");
+    auto* btnChange = new wxButton(m_TopPanel, wxID_EXIT, "수정");
 	auto* btnExit = new wxButton(m_TopPanel, wxID_EXIT, "나가기");
-	topSz->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+
+	topSz->Add(btnAdd, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+    topSz->Add(btnChange, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+    topSz->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
 	auto* line = new wxStaticLine(m_panel, wxID_ANY);
 
 	shell->Add(m_TopPanel, 0, wxEXPAND);
 	shell->Add(line, 0, wxEXPAND);
+
+    btnAdd->Bind(wxEVT_BUTTON, &ClientInfo::BtnClientAdd, this);
+    btnChange->Bind(wxEVT_BUTTON, &ClientInfo::BtnClientChange, this);
+    btnExit->Bind(wxEVT_BUTTON, &ClientInfo::BtnClientCancel, this);
 }
 
 void ClientInfo::LeftBodyInit()
 {
 	// 기본정보
-	//m_LeftPanel = new wxPanel(m_panel, wxID_ANY);
-    //m_LeftPanel->SetBackgroundColour(*wxWHITE);
 	m_bodySizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// 왼쪽 패널 내부용 세로 sizer
@@ -66,25 +100,19 @@ void ClientInfo::RightBodyInit()
 
     auto* right = new wxPanel(m_RightPanel, wxID_ANY);
     right->SetBackgroundColour(*wxWHITE);
-    // right->SetMinSize(wxSize(300, -1));   // ← 우측은 확장시킬 거면 이 줄 삭제!
 
     auto* v = new wxBoxSizer(wxVERTICAL);
 
     const int kTopBarH = 32; // 필요하면 FromDIP(32, this) 사용
     // [기본정보] 제목
-// 가로 상단바: [기본정보] ..... (빈공간)
+    // 가로 상단바: [기본정보] ..... (빈공간)
     auto* topL = new wxBoxSizer(wxHORIZONTAL);
-    auto* title = new wxStaticText(right, wxID_ANY, "[기본정보]");
-    TitleFontInit(title);
+    auto* title = new wxStaticText(right, wxID_ANY, "[구분]");
+    TitleFontInit(title);    
 
-    auto* btnAdd = new wxButton(right, wxID_EXIT, "추가");
-    auto* btnExit = new wxButton(right, wxID_EXIT, "취소");
-    
     topL->Add(title, 0, wxALIGN_CENTER_VERTICAL);
-
     topL->AddStretchSpacer();
-    topL->Add(btnAdd, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
-    topL->Add(btnExit, 0, wxTOP | wxBOTTOM | wxRIGHT, 8);
+
 
     // ★ 오른쪽과 같은 높이 부여
     topL->SetMinSize(wxSize(-1, kTopBarH));
@@ -96,63 +124,20 @@ void ClientInfo::RightBodyInit()
     auto* fields = new wxBoxSizer(wxVERTICAL);
     v->Add(fields, 1, wxEXPAND | wxLEFT | wxRIGHT, 10);         // 폼 전체 좌우 패딩 10
 
-    // 공통: 한 줄 추가(라벨 + 이미 만든 에디트 위젯)
-    auto addRow = [&](const wxString& label, wxWindow* editor) {
-        wxBoxSizer* row = new wxBoxSizer(wxHORIZONTAL);
+    int32 cnt = 1;
+    int32 Titlecnt = 0;
+    wxString titles[2] = { "[거래처정보]","[연락처]" };
+    for (int i = 0; i < ClientInfoTitle.size(); i++)
+    {
+        if (ClientInfoTitle[i] == ",") {
+            auto* hdr = new wxStaticText(right, wxID_ANY, titles[Titlecnt++]);
+            TitleFontInit(hdr); // 필요하면 좀 작은 볼드로 따로 스타일
+            fields->Add(hdr, 0, wxTOP | wxBOTTOM, 6);
+            continue;
+        }
 
-        wxStaticText* lb = new wxStaticText(right, wxID_ANY, label);
-        lb->SetMinSize(wxSize(110, -1));                        // 라벨 폭 통일
-        InfoTitle.push_back(lb);
-        row->Add(lb, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 8);
-
-        row->Add(editor, 1, wxEXPAND);
-        fields->Add(row, 0, wxTOP | wxEXPAND | wxBOTTOM, 6);
-        };
-
-    // 일반 입력칸 생성 헬퍼 (쓰기 가능)
-    auto makeEdit = [&](const wxString& hint)->wxTextCtrl* {
-        wxTextCtrl* ed = new wxTextCtrl(right, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxBORDER_SIMPLE);
-        if (!hint.empty()) ed->SetHint(hint);                   // 입력 시작하면 사라지는 힌트
-        ed->SetBackgroundColour(*wxWHITE);
-        ed->SetForegroundColour(wxColour(50, 50, 50));
-        InfoEdit.push_back(ed);
-        return ed;
-        };
-
-    // ── 실제 필드 추가 (요청: 01/02/04/05/07/08/09) ──
-    // 01. 회사명
-    addRow("01. 회사명", makeEdit(""));
-
-    // 02. 사업자등록번호 (3-2-5) — 항상 보이는 마스크
-    auto* bizMask = new MaskedTextCtrl(
-        right, wxID_ANY,
-        L"_\u2009_\u2009_-\u2009_\u2009_\u2009-_\u2009_\u2009_\u2009_\u2009_",
-        wxBORDER_SIMPLE
-    );
-    InfoEdit.push_back(bizMask);        // ← wxTextCtrl*로 보관 (업캐스트)
-    addRow("02. 사업자등록번호", bizMask);
-
-    // 03. 법인등록번호 (6-7)
-    auto* corpMask = new MaskedTextCtrl(
-        right, wxID_ANY,
-        L"_\u2009_\u2009_\u2009_\u2009_\u2009_-\u2009_\u2009_\u2009_\u2009_\u2009_\u2009_\u2009_\u2009",
-        wxBORDER_SIMPLE
-    );
-    InfoEdit.push_back(corpMask);
-    addRow("03. 법인등록번호", corpMask);
-
-    // 04. 대표자명
-    addRow("04. 대표자명", makeEdit(""));
-
-    // 05. 사업장주소
-    addRow("05. 사업장주소", makeEdit(""));
-
-    // 06. 업태
-    addRow("06. 업태", makeEdit(""));
-
-    // 07. 종목
-    addRow("07. 종목", makeEdit(""));
-
+        addRow(right, fields, wxString(std::to_string(cnt++)) + ". " + ClientInfoTitle[i], makeEdit(right,""));
+    }
     right->SetSizer(v);
 
     // ★★★ (1) right를 rightSz에 등록
@@ -164,61 +149,6 @@ void ClientInfo::RightBodyInit()
 
     // 갱신은 이 컨테이너 쪽에
     m_panel->Layout();   // 또는 최상위 프레임에서 Layout();
-}
-
-void ClientInfo::RightBottmInit()
-{
-    // 1) 우측 아래 패널(부모는 m_RightPanel!)
-    m_RightBottmPanel = new wxPanel(m_RightPanel, wxID_ANY);
-    m_RightBottmPanel->SetBackgroundColour(*wxWHITE);
-
-    auto* bottomV = new wxBoxSizer(wxVERTICAL);
-    m_RightBottmPanel->SetSizer(bottomV);
-
-    // 2) 상단 가로바 (제목 + 버튼) — 부모는 m_RightBottmPanel
-    auto* topH = new wxBoxSizer(wxHORIZONTAL);
-
-    auto* title = new wxStaticText(m_RightBottmPanel, wxID_ANY, "[거래처 담당자]");
-    TitleFontInit(title);
-
-    topH->Add(title, 0, wxALIGN_CENTER_VERTICAL);
-
-    topH->AddStretchSpacer();
-    bottomV->Add(topH, 0, wxLEFT |wxEXPAND | wxBOTTOM, 8);
-
-    // 3) 그리드 — 부모는 m_RightBottmPanel
-    auto* grid = new wxGrid(m_RightBottmPanel, wxID_ANY);
-    grid->CreateGrid(20, 3);
-
-    // 라벨/모양 세팅 (원래 코드 그대로)
-    grid->SetColLabelValue(0, "담당자명");
-    grid->SetColLabelValue(1, "전화번호");
-    grid->SetColLabelValue(2, "이메일");
-    grid->EnableEditing(true);
-    grid->SetSelectionMode(wxGrid::wxGridSelectRows);
-    grid->EnableGridLines(true);
-    grid->SetRowLabelSize(40);
-    grid->SetColLabelSize(28);
-    grid->SetDefaultRowSize(24);
-
-    // 필요 시 컬럼 폭
-    grid->SetColSize(0, 60);
-    grid->SetColSize(1, 100);
-    grid->SetColSize(2, 160);
-
-    // ★ 우측 아래 섹션에서 그리드는 “확장”
-    bottomV->Add(grid, 1, wxEXPAND);
-
-    // 4) 우측 전체 시저(= m_RightPanel의 sizer)에 수평 구분선 + 아래 패널 추가
-    auto* rightSz = wxDynamicCast(m_RightPanel->GetSizer(), wxBoxSizer);
-    wxASSERT(rightSz);
-
-    // 우측 아래 패널을 우측 칼럼에 추가 (비율은 취향: 1이면 위와 공간 나눔)
-    rightSz->Add(m_RightBottmPanel, 1, wxEXPAND);
-
-    // 5) 레이아웃 갱신 — 우측 컨테이너 기준으로
-    m_RightPanel->Layout();
-    m_panel->Layout(); // 필요 시
 }
 
 void ClientInfo::InfoTitleInit()
@@ -240,22 +170,23 @@ void ClientInfo::InfoTitleInit()
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
     LeftSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
 
-    auto* grid = new wxGrid(m_LeftPanel, wxID_ANY);
-    grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
-    grid->SetSizeHints(400, 450, 400, 450); // = Min=Max=465x283
+    m_grid = new wxGrid(m_LeftPanel, wxID_ANY);
+    m_grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
 
-    GridLabelInitilize(grid, C_LabelStr);
+
+    WU::GridLabelInitilize(m_grid, C_LabelStr,false,0);
 
     // 예시 데이터(원하면 제거)
-    grid->SetCellValue(0, 0, "");
-    grid->SetCellValue(0, 1, "휘온정보통신 주식회사");
-    grid->SetCellValue(0, 2, "352-81-00723");
-    grid->SetCellValue(0, 3, "김기종");
-    grid->AutoSizeColumns();
+    m_grid->SetCellValue(0, 0, "");
+    m_grid->SetCellValue(0, 1, "휘온정보통신 주식회사");
+    m_grid->SetCellValue(0, 2, "352-81-00723");
+    m_grid->SetCellValue(0, 3, "김기종");
+    m_grid->AutoSizeColumns();
 
-    GridColumnInitilize(grid, C_gridWid);
+    WU::GridColumnInitilize(m_grid, C_gridWid);
 
-    LeftSz->Add(grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
+    LeftSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 
-    m_bodySizer->Add(m_LeftPanel, 1, wxEXPAND);
+    m_bodySizer->Add(m_LeftPanel, 1, wxEXPAND | wxALL, 6);
+    m_grid->Bind(wxEVT_GRID_CELL_LEFT_DCLICK, &ClientInfo::GridClickEvent, this);
 }

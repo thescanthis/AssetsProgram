@@ -5,6 +5,7 @@
 #include "productInfo.h"
 #include "ClientInfo.h"
 #include "InventorySearch.h"
+#include "ClientOrderManage.h"
 
 CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 	:SubFrame(parent,"없음")
@@ -30,13 +31,14 @@ CopyFrame::CopyFrame(wxWindow* parent, const wxString&)
 
 	if (CompanyPanels.size() >= 2) {
 		// 0번: 회사입력 / 재고추가
-		CompanyPanels[0]->AddButton("회사정보", Template->MakeSingletonOpener<CompanyInfoDetail>(this,"회사정보"), 8);
-		CompanyPanels[0]->AddButton("상품정보", Template->MakeSingletonOpener<ProductInfo>(this, "상품정보"), 8);
-		CompanyPanels[0]->AddButton("거래처정보", Template->MakeSingletonOpener<ClientInfo>(this,"거래처정보"), 8);
+		CompanyPanels[0]->AddButton("회사정보", G_Template->MakeSingletonOpener<CompanyInfoDetail>(this,"회사정보"), 8);
+		CompanyPanels[0]->AddButton("상품정보", G_Template->MakeSingletonOpener<ProductInfo>(this, "상품정보"), 8);
+		CompanyPanels[0]->AddButton("거래처정보", G_Template->MakeSingletonOpener<ClientInfo>(this,"거래처정보"), 8);
 		CompanyPanels[0]->GetContentSizer()->AddStretchSpacer(); // 아래 공간 밀어내기(선택)
 
 		// 1번: 거래처정보 / 재고조회
-		CompanyPanels[1]->AddButton("재고관리", Template->MakeSingletonOpener<InventorySearch>(this, "재고관리"), 8);
+		CompanyPanels[1]->AddButton("발주관리", G_Template->MakeSingletonOpener<ClientOrderManage>(this, "발주관리"), 8);
+		CompanyPanels[1]->AddButton("재고관리", G_Template->MakeSingletonOpener<InventorySearch>(this, "재고관리"), 8);
 		CompanyPanels[1]->GetContentSizer()->AddStretchSpacer(); // 선택
 	}
 

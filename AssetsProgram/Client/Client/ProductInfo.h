@@ -1,5 +1,6 @@
 #pragma once
 #include "WidgetParent.h"
+
 class ProductInfo : public WidgetParent
 {
 public:
@@ -8,11 +9,13 @@ public:
 
 private:
 	void BtnProductAdd(wxCommandEvent& event);
+	void BtnProductChange(wxCommandEvent& event);
 	void BtnProductCancel(wxCommandEvent& event);
 
-	void GridInfoAdd(string title);
-	void BtnGridInfoDel(wxCommandEvent& event);
 	void GridClickEvent(wxGridEvent& e);
+
+	void GridInfoAdd(std::string title);
+	void BtnGridInfoDel(wxCommandEvent& event);
 private:
 	void BtnTitleInit() override;
 	void LeftBodyInit() override;
@@ -20,8 +23,9 @@ private:
 	void RightBodyInit() override;
 
 private:
-	map<string, vector<C_Details>> ProductInfos;
-	vector<map<string, int32>> InvenNames, InvenNames1;
+	wxPanel* m_RightPanel;
+	std::map<std::string, std::vector<C_Details>> ProductInfos;
+	std::vector<std::map<std::string, int32>> InvenNames, InvenNames1;
 	int32 m_gridRow = -1;
 };
 

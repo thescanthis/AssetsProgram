@@ -139,16 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ClientDetailInfo.h" />
     <ClInclude Include="ClientInfo.h" />
+    <ClInclude Include="ClientOrderInput.h" />
+    <ClInclude Include="ClientOrderManage.h" />
+    <ClInclude Include="ClientQuickAdd.h" />
+    <ClInclude Include="ClientSearch.h" />
     <ClInclude Include="CompanyInfo.h" />
     <ClInclude Include="CompanyInfoDetail.h" />
     <ClInclude Include="CopyFrame.h" />
+    <ClInclude Include="DBTest.h" />
     <ClInclude Include="InventoryAdd.h" />
     <ClInclude Include="InventorySearch.h" />
     <ClInclude Include="Inventory_ClickInfo.h" />
     <ClInclude Include="MainFrame.h" />
-    <ClInclude Include="MaskedTextCtrl.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ProductAdd.h" />
     <ClInclude Include="ProductInfo.h" />
     <ClInclude Include="SubFrame.h" />
     <ClInclude Include="TemplateFunc.h" />
@@ -157,20 +163,26 @@
     <ClInclude Include="WidgetParent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientDetailInfo.cpp" />
     <ClCompile Include="ClientInfo.cpp" />
+    <ClCompile Include="ClientOrderInput.cpp" />
+    <ClCompile Include="ClientOrderManage.cpp" />
+    <ClCompile Include="ClientQuickAdd.cpp" />
+    <ClCompile Include="ClientSearch.cpp" />
     <ClCompile Include="CompanyInfo.cpp" />
     <ClCompile Include="CompanyInfoDetail.cpp" />
     <ClCompile Include="CopyFrame.cpp" />
+    <ClCompile Include="DBTest.cpp" />
     <ClCompile Include="InventoryAdd.cpp" />
     <ClCompile Include="InventorySearch.cpp" />
     <ClCompile Include="Inventory_ClickInfo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainFrame.cpp" />
-    <ClCompile Include="MaskedTextCtrl.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ProductAdd.cpp" />
     <ClCompile Include="ProductInfo.cpp" />
     <ClCompile Include="SubFrame.cpp" />
     <ClCompile Include="WidgetParent.cpp" />

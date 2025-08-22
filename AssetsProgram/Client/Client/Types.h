@@ -3,8 +3,6 @@
 #include <wx/grid.h>
 #include <array>
 
-class TemplateFunc;
-
 using BYTE = unsigned char;
 using int8 = __int8;
 using int16 = __int16;
@@ -53,15 +51,16 @@ struct I_Detalis
 #endif
 
 // Inventory Grid Info(Search,ClickInfo)
-const wxString LabelStr[8] = { "상품명","날짜","재고번호","거래처","수량","단위","재고분류","사업명" };
+const wxArrayString LabelStr = { "상품명","날짜","상품번호","거래처","수량","단위","재고분류","사업명" };
 const int32 wid[8] = { 140,70,140,210,70,70,70,180 };
 
 //ProductInfo,CompanyDetails
-const wxString P_LabelStr[5] = { "","자제실분류","재고번호","상품명","입고량"};
-const int32 P_gridWid[5] = { 0,70,140,140,70 };
+const wxArrayString P_LabelStr = {"상품코드","상품명"};
+const int32 P_gridWid[2] = { 70,140};
 
 //ClientInfo
-const wxString C_LabelStr[4] = { "선택","회사명","사업자번호","대표자명" };
+const wxArrayString C_LabelStr = { "선택","회사명","사업자번호","대표자명" };
 const int32 C_gridWid[4] = { 30,170,90,50 };
 
-extern TemplateFunc* Template;
+extern class TemplateFunc* G_Template;
+extern class DBTest* DBMaps;

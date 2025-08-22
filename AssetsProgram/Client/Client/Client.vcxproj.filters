@@ -25,6 +25,12 @@
     <Filter Include="Company">
       <UniqueIdentifier>{ca967747-5c31-412c-bb0c-cb64891f7258}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Product">
+      <UniqueIdentifier>{7d627e38-f14c-4602-9985-dbc29ac5f82c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{357c46b0-5675-4afa-879f-0db005db159a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -42,16 +48,7 @@
     <ClInclude Include="CopyFrame.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
-    <ClInclude Include="MaskedTextCtrl.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientInfo.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
     <ClInclude Include="WidgetParent.h">
-      <Filter>SubFrame</Filter>
-    </ClInclude>
-    <ClInclude Include="ProductInfo.h">
       <Filter>SubFrame</Filter>
     </ClInclude>
     <ClInclude Include="TemplateFunc.h">
@@ -75,6 +72,33 @@
     <ClInclude Include="WidgetUtilsFunc.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="DBTest.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductInfo.h">
+      <Filter>Product</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductAdd.h">
+      <Filter>Product</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientInfo.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientDetailInfo.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSearch.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientQuickAdd.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientOrderInput.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientOrderManage.h">
+      <Filter>Client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -92,16 +116,7 @@
     <ClCompile Include="CopyFrame.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
-    <ClCompile Include="MaskedTextCtrl.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientInfo.cpp">
-      <Filter>SubFrame</Filter>
-    </ClCompile>
     <ClCompile Include="WidgetParent.cpp">
-      <Filter>SubFrame</Filter>
-    </ClCompile>
-    <ClCompile Include="ProductInfo.cpp">
       <Filter>SubFrame</Filter>
     </ClCompile>
     <ClCompile Include="InventoryAdd.cpp">
@@ -118,6 +133,33 @@
     </ClCompile>
     <ClCompile Include="CompanyInfoDetail.cpp">
       <Filter>Company</Filter>
+    </ClCompile>
+    <ClCompile Include="DBTest.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductInfo.cpp">
+      <Filter>Product</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductAdd.cpp">
+      <Filter>Product</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientInfo.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientDetailInfo.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSearch.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientQuickAdd.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientOrderInput.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientOrderManage.cpp">
+      <Filter>Client</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
