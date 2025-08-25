@@ -1,5 +1,6 @@
 #pragma once
 #include "WidgetParent.h"
+#include "BufferReader.h"
 class WidgetParent : public wxFrame
 {
 public:

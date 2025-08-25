@@ -1,10 +1,6 @@
 #pragma once
 #include "Protocol.pb.h"
 
-#if UE_BUILD_DEBUG + UE_BUILD_DEVELOPMENT + UE_BUILD_TEST + UE_BUILD_SHIPPING >= 1
-#include "S1.h"
-#endif
-
 using PacketHandlerFunc = std::function<bool(PacketSessionRef&, BYTE*, int32)>;
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -14,8 +10,14 @@ enum : uint16
 	PKT_S_LOGIN = 1001,
 	PKT_C_ENTER_GAME = 1002,
 	PKT_S_ENTER_GAME = 1003,
-	PKT_C_CHAT = 1004,
-	PKT_S_CHAT = 1005,
+	PKT_C_LEAVE_GAME = 1004,
+	PKT_S_LEAVE_GAME = 1005,
+	PKT_S_SPAWN = 1006,
+	PKT_S_DESPAWN = 1007,
+	PKT_C_MOVE = 1008,
+	PKT_S_MOVE = 1009,
+	PKT_C_CHAT = 1010,
+	PKT_S_CHAT = 1011,
 };
 
 // Custom Handlers

@@ -5,7 +5,7 @@ class ClientOrderManage : public wxFrame
 public:
     explicit ClientOrderManage(wxWindow* parent = nullptr,
         const wxString& title = "발주관리",
-        const wxSize& size = wxSize(850, 600));
+        const wxSize& size = wxSize(1024, 600));
     ~ClientOrderManage() override = default;
 
 private:
@@ -19,9 +19,6 @@ private:
     void BuildTab_ByClient(wxPanel* tab);   // 거래처별 조회
 
     // ==== 공용 헬퍼 ====
-    wxButton* MakeButton(wxWindow* parent, const wxString& text,
-        wxObjectEventFunction handler = nullptr,
-        long style = 0);
     void      AutoPadLastColumn(wxGrid* g, int extra = 12);
     void      InstallEscClose();
 

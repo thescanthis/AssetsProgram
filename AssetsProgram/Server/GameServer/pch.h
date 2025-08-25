@@ -29,24 +29,3 @@ USING_SHARED_PTR(Player);
 #define SEND_PACKET(pkt)													\
 	SendBufferRef sendBuffer = ServerPacketHandler::MakeSendBuffer(pkt);	\
 	session->Send(sendBuffer);
-
-
-
-#if 0
-GenPackets.. 명령어 카피하는거임.
-XCOPY / Y Enum.pb.h "../../../DummyClient"
-XCOPY / Y Enum.pb.cc "../../../DummyClient"
-XCOPY / Y Struct.pb.h "../../../DummyClient"
-XCOPY / Y Struct.pb.cc "../../../DummyClient"
-XCOPY / Y Protocol.pb.h "../../../DummyClient"
-XCOPY / Y Protocol.pb.cc "../../../DummyClient"
-XCOPY / Y ClientPacketHandler.h "../../../DummyClient"
-
-XCOPY / Y Enum.pb.h "../../../../S1/Source/S1/Network"
-XCOPY / Y Enum.pb.cc "../../../../S1/Source/S1/Network"
-XCOPY / Y Struct.pb.h "../../../../S1/Source/S1/Network"
-XCOPY / Y Struct.pb.cc "../../../../S1/Source/S1/Network"
-XCOPY / Y Protocol.pb.h "../../../../S1/Source/S1/Network"
-XCOPY / Y Protocol.pb.cc "../../../../S1/Source/S1/Network"
-XCOPY / Y ClientPacketHandler.h "../../../../S1/Source/S1"
-#endif 

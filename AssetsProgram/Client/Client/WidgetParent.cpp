@@ -44,6 +44,8 @@ WidgetParent::WidgetParent(wxWindow* parent, const wxString Title, wxSize Size)
 
 WidgetParent::~WidgetParent()
 {
+	InfoTitle.clear();
+	InfoEdit.clear();
 }
 
 void WidgetParent::TitleFontInit(wxStaticText* title, int AddFontSize)

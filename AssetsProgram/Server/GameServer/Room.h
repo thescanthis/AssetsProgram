@@ -8,14 +8,6 @@ public:
 	virtual ~Room();
 
 public:
-	bool EnterRoom(ObjectRef object, bool randPos = true);
-	bool LeaveRoom(ObjectRef object);
-
-	bool HandleEnterPlayer(PlayerRef player);
-	bool HandleLeavePlayer(PlayerRef player);
-	void HandleMove(Protocol::C_MOVE pkt);
-
-public:
 	void UpdateTick();
 
 	RoomRef GetRoomRef();

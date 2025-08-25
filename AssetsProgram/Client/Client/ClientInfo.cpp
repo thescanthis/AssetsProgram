@@ -3,7 +3,8 @@
 #include "ClientDetailInfo.h"
 #include "ClientOrderInput.h"
 
-ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : WidgetParent(parent,Title)
+ClientInfo::ClientInfo(wxWindow* parent, const wxString Title) : 
+    WidgetParent(parent,Title)
 {
 	SetSizeHints(770, 600, 770, 600);         // 고정 크기(원하면 제거)
     m_RightPanel = new wxPanel(m_panel, wxID_ANY);
@@ -37,7 +38,7 @@ void ClientInfo::BtnClientChange(wxCommandEvent& event)
 
 void ClientInfo::BtnClientCancel(wxCommandEvent& event)
 {
-    this->Close();
+    this->Close(true);
 }
 
 void ClientInfo::GridClickEvent(wxGridEvent& e)
@@ -75,9 +76,6 @@ void ClientInfo::BtnTitleInit()
 
 void ClientInfo::LeftBodyInit()
 {
-	// 기본정보
-	m_bodySizer = new wxBoxSizer(wxHORIZONTAL);
-
 	// 왼쪽 패널 내부용 세로 sizer
 	auto* leftRoot = new wxBoxSizer(wxVERTICAL);
 	m_LeftPanel->SetSizer(leftRoot);
@@ -90,9 +88,6 @@ void ClientInfo::LeftBodyInit()
 void ClientInfo::RightBodyInit()
 {
     auto* vline = new wxStaticLine(m_panel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL);
-
-   // m_RightPanel = new wxPanel(m_panel, wxID_ANY);
-   // m_RightPanel->SetBackgroundColour(*wxWHITE);
 
     // 오른쪽 내부 sizer
     auto* rightSz = new wxBoxSizer(wxVERTICAL);
@@ -170,12 +165,8 @@ void ClientInfo::InfoTitleInit()
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
     LeftSz->Add(topH, 0, wxEXPAND | wxBOTTOM, 8);
 
-    m_grid = new wxGrid(m_LeftPanel, wxID_ANY);
-    m_grid->CreateGrid(20, 4);                    // 초기 10행 5열 (원하면 바꿔도 OK)
-
-
-    WU::GridLabelInitilize(m_grid, C_LabelStr,false,0);
-
+    m_grid = WU::MakeGrid(m_LeftPanel, C_LabelStr, C_gridWid, wxEVT_GRID_CELL_LEFT_DCLICK, &ClientInfo::GridClickEvent, this);
+    
     // 예시 데이터(원하면 제거)
     m_grid->SetCellValue(0, 0, "");
     m_grid->SetCellValue(0, 1, "휘온정보통신 주식회사");
@@ -188,5 +179,4 @@ void ClientInfo::InfoTitleInit()
     LeftSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);           // 그리드를 오른쪽 패널에 꽉 채움
 
     m_bodySizer->Add(m_LeftPanel, 1, wxEXPAND | wxALL, 6);
-    m_grid->Bind(wxEVT_GRID_CELL_LEFT_DCLICK, &ClientInfo::GridClickEvent, this);
 }

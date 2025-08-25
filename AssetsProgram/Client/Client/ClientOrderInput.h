@@ -29,10 +29,6 @@ private:
     wxChoice* AddChoiceRow(const wxString& label, const wxArrayString& choices, int sel = 0);
     wxSearchCtrl* AddSearchRow(const wxString& label, const wxString& hint = wxEmptyString);
 
-    wxButton* MakeButton(wxWindow* parent, const wxString& text,
-        wxObjectEventFunction handler = nullptr,
-        long style = 0);
-
     void         InstallEscClose();
 
     // ===== ¿Ã∫•∆Æ =====

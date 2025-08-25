@@ -31,6 +31,12 @@
     <Filter Include="Client">
       <UniqueIdentifier>{357c46b0-5675-4afa-879f-0db005db159a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{71a7b733-25f6-4c30-9409-c69e5814250e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Protocol">
+      <UniqueIdentifier>{4df23a76-6d81-466a-96e7-5c9b55a5ebc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -39,7 +45,7 @@
     <ClInclude Include="MainFrame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Types.h">
+    <ClInclude Include="WidgetTypes.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="SubFrame.h">
@@ -98,6 +104,18 @@
     </ClInclude>
     <ClInclude Include="ClientOrderManage.h">
       <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\Enum.pb.h">
+      <Filter>Network\Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\Protocol.pb.h">
+      <Filter>Network\Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="Network\Struct.pb.h">
+      <Filter>Network\Protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +178,18 @@
     </ClCompile>
     <ClCompile Include="ClientOrderManage.cpp">
       <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientPacketHandler.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\Enum.pb.cc">
+      <Filter>Network\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\Protocol.pb.cc">
+      <Filter>Network\Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="Network\Struct.pb.cc">
+      <Filter>Network\Protocol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

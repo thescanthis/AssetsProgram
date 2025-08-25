@@ -32,16 +32,17 @@ void ClientOrderInput::BuildUI()
 
     BuildHeader(root);
     root->AddSpacer(4);
-
+    
     BuildOrderMeta(root);
     root->AddSpacer(2);
-
+    
     BuildItems(root);
     BuildTotals(root);
     BuildBottomMemo(root);
 
     root->AddSpacer(4);
 }
+
 
 /* ---------- 상단 버튼바 ---------- */
 void ClientOrderInput::BuildTopBar(wxBoxSizer* root)
@@ -50,10 +51,15 @@ void ClientOrderInput::BuildTopBar(wxBoxSizer* root)
     auto* h = new wxBoxSizer(wxHORIZONTAL);
     bar->SetSizer(h);
 
-    h->AddStretchSpacer(1);
-    m_btnSave = MakeButton(bar, "저장", wxCommandEventHandler(ClientOrderInput::OnSave));
+    h->AddStretchSpacer(1);  // == h->Add(0,0,1);
+
+    m_btnSave = WU::MakeButton(bar, "저장", &ClientOrderInput::OnSave,this);
+    h->Add(m_btnSave, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 6);
+
     h->AddSpacer(4);
-    m_btnClose = MakeButton(bar, "종료", wxCommandEventHandler(ClientOrderInput::OnClose));
+
+    m_btnClose = WU::MakeButton(bar, "종료", &ClientOrderInput::OnClose,this);
+    h->Add(m_btnClose, 0, wxALIGN_CENTER_VERTICAL);
 
     root->Add(bar, 0, wxEXPAND | wxALL, 6);
 }
@@ -83,7 +89,7 @@ void ClientOrderInput::BuildHeader(wxBoxSizer* root)
 #endif
         row->Add(m_rcvSearch, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, 4);
 
-        m_btnAddClient = MakeButton(left, "선택", wxCommandEventHandler(ClientOrderInput::OnAddClient));
+        m_btnAddClient = WU::MakeButton(left, "선택", &ClientOrderInput::OnAddClient,this);
         row->Add(m_btnAddClient, 0);
 
         lv->Add(row, 0, wxEXPAND | wxBOTTOM, 4);
@@ -168,8 +174,8 @@ void ClientOrderInput::BuildItems(wxBoxSizer* root)
     auto* h = new wxBoxSizer(wxHORIZONTAL);
     bar->SetSizer(h);
 
-    m_btnPickItem = MakeButton(bar, "상품추가", wxCommandEventHandler(ClientOrderInput::OnAddItem));
-    m_btnDelSel = MakeButton(bar, "선택삭제", wxCommandEventHandler(ClientOrderInput::OnDeleteSelected));
+    m_btnPickItem = WU::MakeButton(bar, "상품추가", &ClientOrderInput::OnAddItem,this);
+    m_btnDelSel = WU::MakeButton(bar, "선택삭제", &ClientOrderInput::OnDeleteSelected, this);
 
     h->Add(m_btnPickItem, 0, 0);
     h->Add(m_btnDelSel, 0, 0);
@@ -177,9 +183,9 @@ void ClientOrderInput::BuildItems(wxBoxSizer* root)
     root->Add(bar, 0, wxEXPAND | wxALL, 6);
 
     const wxArrayString headers={"상품코드","상품명","수량","단위","단가","공급가액","세액","합계","비고"};
-
-    // 그리드
-    m_gridItems = WU::MakeGrid(m_panel, headers,wid, wxEVT_GRID_CELL_LEFT_CLICK,&ClientOrderInput::OnGridClick,this);
+    const int32 CM_gridWid[9] = { 80,150,80,60,80,70,70,90,80 };
+    
+    m_gridItems = WU::MakeGrid(m_panel, headers, CM_gridWid, wxEVT_GRID_CELL_LEFT_CLICK, &ClientOrderInput::OnGridClick,this);
     root->Add(m_gridItems, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 6);
 }
 
@@ -295,14 +301,6 @@ wxSearchCtrl* ClientOrderInput::AddSearchRow(const wxString& label, const wxStri
     if (!hint.empty()) sc->SetHint(hint);
     AddRow(label, sc, 1);
     return sc;
-}
-
-wxButton* ClientOrderInput::MakeButton(wxWindow* parent, const wxString& text,
-    wxObjectEventFunction handler, long style)
-{
-    auto* b = new wxButton(parent, wxID_ANY, text, wxDefaultPosition, wxDefaultSize, style);
-    if (handler) b->Bind(wxEVT_BUTTON, handler, this);
-    return b; // Add는 호출부에서
 }
 
 void ClientOrderInput::InstallEscClose()

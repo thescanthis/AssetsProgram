@@ -71,14 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\AIND_Library\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath)</ExecutablePath>
-    <IncludePath>C:\AIND_Library\wxWidgets\include;C:\AIND_Library\wxWidgets\lib\vc_x64_lib\mswud;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>C:\AIND_Library\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath)</ExecutablePath>
-    <IncludePath>C:\AIND_Library\wxWidgets\include;C:\AIND_Library\wxWidgets\lib\vc_x64_lib\mswud;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,10 +115,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\AIND_Library\wxWidgets\include;C:\AIND_Library\wxWidgets\lib\vc_x64_lib\mswud;$(SolutionDir)..\Server\ServerCore\;$(SolutionDir)..\Server\Libraries\Include\;$(ProjectDir)ProtobufCore\Include;$(ProejctDir)ProtobufCore\Lib;$(ProjectDir)Network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\AIND_Library\wxWidgets\lib\vc_x64_lib;$(SolutionDir)..\Server\Libraries\Libs\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,10 +134,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\AIND_Library\wxWidgets\include;C:\AIND_Library\wxWidgets\lib\vc_x64_lib\mswud;$(SolutionDir)..\Server\ServerCore\;$(SolutionDir)..\Server\Libraries\Include\;$(ProjectDir)ProtobufCore\Include;$(ProejctDir)ProtobufCore\Lib;$(ProjectDir)Network;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\AIND_Library\wxWidgets\lib\vc_x64_lib;$(SolutionDir)..\Server\Libraries\Libs\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -143,6 +147,7 @@
     <ClInclude Include="ClientInfo.h" />
     <ClInclude Include="ClientOrderInput.h" />
     <ClInclude Include="ClientOrderManage.h" />
+    <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="ClientQuickAdd.h" />
     <ClInclude Include="ClientSearch.h" />
     <ClInclude Include="CompanyInfo.h" />
@@ -153,12 +158,15 @@
     <ClInclude Include="InventorySearch.h" />
     <ClInclude Include="Inventory_ClickInfo.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="Network\Enum.pb.h" />
+    <ClInclude Include="Network\Protocol.pb.h" />
+    <ClInclude Include="Network\Struct.pb.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ProductAdd.h" />
     <ClInclude Include="ProductInfo.h" />
     <ClInclude Include="SubFrame.h" />
     <ClInclude Include="TemplateFunc.h" />
-    <ClInclude Include="Types.h" />
+    <ClInclude Include="WidgetTypes.h" />
     <ClInclude Include="WidgetUtilsFunc.h" />
     <ClInclude Include="WidgetParent.h" />
   </ItemGroup>
@@ -167,6 +175,7 @@
     <ClCompile Include="ClientInfo.cpp" />
     <ClCompile Include="ClientOrderInput.cpp" />
     <ClCompile Include="ClientOrderManage.cpp" />
+    <ClCompile Include="ClientPacketHandler.cpp" />
     <ClCompile Include="ClientQuickAdd.cpp" />
     <ClCompile Include="ClientSearch.cpp" />
     <ClCompile Include="CompanyInfo.cpp" />
@@ -178,6 +187,18 @@
     <ClCompile Include="Inventory_ClickInfo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="Network\Enum.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Network\Protocol.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Network\Struct.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

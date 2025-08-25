@@ -10,7 +10,7 @@ namespace WU {
 	inline wxGrid* MakeGrid(wxWindow* parent, const wxArrayString headers, const int32 wid[], wxEventTypeTag<wxGridEvent> event, void(T::* OnGridDClick)(wxGridEvent&), T* receiver, int32 row = 0)
 	{
 		auto* g = new wxGrid(parent, wxID_ANY);
-		g->CreateGrid(row, headers.GetCount());
+		g->CreateGrid(row+20, headers.GetCount());
 		// 라벨/정렬/행번호 숨김
 		GridLabelInitilize(g, headers);
 		GridColumnInitilize(g, wid);
@@ -54,4 +54,15 @@ namespace WU {
 		m_grid->SetMinSize(bs);           // 최소 크기로 고정
 		m_grid->GetParent()->Layout();    // 레이아웃 갱신
 	}
+
+	template<class T>
+	inline wxButton* MakeButton(wxWindow* parent, const wxString& text,
+		void(T::* handler)(wxCommandEvent&), T* receiver, long style=0)
+	{
+		auto* b = new wxButton(parent, wxID_ANY, text, wxDefaultPosition, wxDefaultSize, style);
+		if (handler) b->Bind(wxEVT_BUTTON, handler, receiver);
+		return b;
+	}
+
+	//void(T::* OnGridDClick)(wxGridEvent&)
 }

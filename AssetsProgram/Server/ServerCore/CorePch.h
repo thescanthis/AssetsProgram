@@ -18,6 +18,17 @@
 #include <windows.h>
 #include <iostream>
 #include <assert.h>
+#include <iterator>
+#include <algorithm>
+#include <string>
+#include <tuple>
+#include <typeindex>
+
+#include <chrono>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <functional>
 using namespace std;
 
 #include <winsock2.h>

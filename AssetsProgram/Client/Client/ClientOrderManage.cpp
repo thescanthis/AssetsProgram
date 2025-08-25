@@ -45,23 +45,23 @@ void ClientOrderManage::BuildToolbar(wxBoxSizer* root)
 
     h->AddStretchSpacer(1);
 
-    m_btnPrint = MakeButton(bar, "인쇄", wxCommandEventHandler(ClientOrderManage::OnPrint));
+    m_btnPrint = WU::MakeButton(bar, "인쇄", &ClientOrderManage::OnPrint,this);
     h->Add(m_btnPrint, 0, 0);
     h->AddSpacer(6);
 
-    m_btnNew = MakeButton(bar, "추가", wxCommandEventHandler(ClientOrderManage::OnAdd));
+    m_btnNew = WU::MakeButton(bar, "추가", &ClientOrderManage::OnAdd, this);
     h->Add(m_btnNew, 0, 0);
     h->AddSpacer(6);
 
-    m_btnEdit = MakeButton(bar, "수정", wxCommandEventHandler(ClientOrderManage::OnEdit));
+    m_btnEdit = WU::MakeButton(bar, "수정", &ClientOrderManage::OnEdit, this);
     h->Add(m_btnEdit, 0, 0);
     h->AddSpacer(6);
 
-    m_btnDel = MakeButton(bar, "삭제", wxCommandEventHandler(ClientOrderManage::OnDelete));
+    m_btnDel = WU::MakeButton(bar, "삭제", &ClientOrderManage::OnDelete, this);
     h->Add(m_btnDel, 0, 0);
     h->AddSpacer(6);
 
-    m_btnClose = MakeButton(bar, "종료", wxCommandEventHandler(ClientOrderManage::OnClose));
+    m_btnClose = WU::MakeButton(bar, "종료", &ClientOrderManage::OnClose, this);
     h->Add(m_btnClose, 0, 0);
 
     root->Add(bar, 0, wxEXPAND | wxALL, 6);
@@ -93,9 +93,10 @@ void ClientOrderManage::BuildTab_Period(wxPanel* tab)
     v->Add(m_periodBar, 0, wxEXPAND | wxALL, 4);
 
     // 컬럼 헤더
-    const wxArrayString headers{ "발행일","납기일","거래처","상품","공급가액","세액","합계","비고" };
+    const wxArrayString headers{ "발행일","납기일","거래처","상품명","공급가액","세액","합계","비고" };
+    const int32 CM_gridWid[8] = { 80,80,160,210,80,80,80,150 };
 
-    m_gridPeriod = WU::MakeGrid(tab, headers, wid, wxEVT_GRID_CELL_LEFT_DCLICK, &ClientOrderManage::OnGridDClick, this);
+    m_gridPeriod = WU::MakeGrid(tab, headers, CM_gridWid, wxEVT_GRID_CELL_LEFT_DCLICK, &ClientOrderManage::OnGridDClick, this);
     v->Add(m_gridPeriod, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 4);
 
     // 이벤트
@@ -123,14 +124,6 @@ void ClientOrderManage::BuildTab_ByClient(wxPanel* tab)
 }
 
 /* ================= Helpers ================= */
-
-wxButton* ClientOrderManage::MakeButton(wxWindow* parent, const wxString& text,
-    wxObjectEventFunction handler, long style)
-{
-    auto* b = new wxButton(parent, wxID_ANY, text, wxDefaultPosition, wxDefaultSize, style);
-    if (handler) b->Bind(wxEVT_BUTTON, handler, this);
-    return b;
-}
 
 void ClientOrderManage::AutoPadLastColumn(wxGrid* g, int extra)
 {
@@ -164,7 +157,7 @@ void ClientOrderManage::BuildDateRangeBar(wxWindow* parent,
     row->SetSizer(h);
 
     if (withLeftAllButton) {
-        auto* btnAll = MakeButton(row, "전체", wxCommandEventHandler(ClientOrderManage::OnAll));
+        auto* btnAll = WU::MakeButton(row, "전체", &ClientOrderManage::OnAll, this);
         h->Add(btnAll, 0, wxRIGHT, 6);
         if (outAllBtn) *outAllBtn = btnAll;
     }
@@ -183,12 +176,12 @@ void ClientOrderManage::BuildDateRangeBar(wxWindow* parent,
     outEnd = new wxDatePickerCtrl(row, wxID_ANY);
     h->Add(outEnd, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 6);
 
-    outQuickBtn = MakeButton(row, "기간", wxCommandEventHandler(ClientOrderManage::OnQuickPeriod));
+    outQuickBtn =WU::MakeButton(row, "기간", &ClientOrderManage::OnQuickPeriod,this);
     h->Add(outQuickBtn, 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 6);
 
     // 오른쪽: 조회
     h->AddStretchSpacer(1);
-    outFindBtn = MakeButton(row, "조회", wxCommandEventHandler(ClientOrderManage::OnQuery));
+    outFindBtn = WU::MakeButton(row, "조회", &ClientOrderManage::OnQuery, this);
     h->Add(outFindBtn, 0, wxALIGN_CENTER_VERTICAL);
 
     outPanel = row;

@@ -195,11 +195,11 @@ void ProductInfo::LeftBodyInit()
     // 상단 가로바를 우측 패널의 세로 레이아웃에 추가
     rightSz->Add(topH, 0, wxEXPAND | wxALL, 6);
 
-    m_grid = new wxGrid(m_RightPanel, wxID_ANY);
-    m_grid->CreateGrid(20, 3);                    // 초기 10행 5열 (원하면 바꿔도 OK)
-    //m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
+    //m_grid = new wxGrid(m_RightPanel, wxID_ANY);
+    //m_grid->CreateGrid(20, 2);                    // 초기 10행 5열 (원하면 바꿔도 OK)
+    ////m_grid->SetSizeHints(485, 270, 485, 270); // = Min=Max=465x283
 
-    WU::GridLabelInitilize(m_grid, P_LabelStr);
+    m_grid = WU::MakeGrid(m_RightPanel, P_LabelStr, wid, wxEVT_GRID_CELL_LEFT_DCLICK, &ProductInfo::GridClickEvent, this);
 
     //// 예시 데이터(원하면 제거) DB에서 긁어오는 데이터
 
@@ -220,8 +220,6 @@ void ProductInfo::LeftBodyInit()
     rightSz->Add(m_grid, 1, wxALIGN_LEFT | wxALIGN_TOP);
 
     m_bodySizer->Add(m_RightPanel, 1, wxEXPAND);
-
-    m_grid->Bind(wxEVT_GRID_CELL_LEFT_DCLICK, &ProductInfo::GridClickEvent, this);
     btnDel->Bind(wxEVT_BUTTON, &ProductInfo::BtnGridInfoDel, this);
 }
 

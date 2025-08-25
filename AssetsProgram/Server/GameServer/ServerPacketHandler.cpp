@@ -7,6 +7,16 @@
 #include "GameSession.h"
 #include "Player.h"
 
+/*
+XCOPY /Y Enum.pb.h "../../../../Client/Client/Network"
+XCOPY /Y Enum.pb.cc "../../../../Client/Client/Network"
+XCOPY /Y Struct.pb.h "../../../../Client/Client/Network"
+XCOPY /Y Struct.pb.cc "../../../../Client/Client/Network"
+XCOPY /Y Protocol.pb.h "../../../../Client/Client/Network"
+XCOPY /Y Protocol.pb.cc "../../../../Client/Client/Network"
+XCOPY /Y ClientPacketHandler.h "../../../../Client/Client/Network"
+*/
+
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -41,49 +51,7 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 
 bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)
 {
-	// 플레이어 생성
-	PlayerRef player = ObjectUtils::CreatePlayer(static_pointer_cast<GameSession>(session));
-
-	// 방에 입장 Job방식에서는 이렇게 바로 함수를 사용하면안됨.
-	// GRoom->HandleEnterPlayer(player);
-	GRoom->DoAsync(&Room::HandleEnterPlayer,player);
-
-	return true;
-}
-
-bool Handle_C_LEAVE_GAME(PacketSessionRef& session, Protocol::C_LEAVE_GAME& pkt)
-{
-	auto gameSession = static_pointer_cast<GameSession>(session);
-
-	PlayerRef player = gameSession->player.load();
-	if (player == nullptr)
-		return false;
-
-	RoomRef room = player->room.load().lock();
-	if (room == nullptr)
-		return false;
-
-	//room->HandleLeavePlayer(player);
-	GRoom->DoAsync(&Room::HandleLeavePlayer, player);
-	
-	return true;
-}
-
-bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
-{
-	auto gameSession = static_pointer_cast<GameSession>(session);
-
-	PlayerRef player = gameSession->player.load();
-	if (player == nullptr)
-		return false;
-
-	RoomRef room = player->room.load().lock();
-	if (room == nullptr)
-		return false;
-
-	//room->HandleMove(pkt);
-	GRoom->DoAsync(&Room::HandleMove, pkt);
-	return true;
+	return false;
 }
 
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)

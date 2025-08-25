@@ -47,8 +47,8 @@ void ClientSearch::BuildTopBar(wxBoxSizer* root)
     bar->SetSizer(h);
 
     h->AddStretchSpacer(1);
-    m_btnQuickAdd = MakeButton(bar, "간편 추가", wxCommandEventHandler(ClientSearch::OnClickQuickAdd), 6);
-    m_btnClose = MakeButton(bar, "닫기", wxCommandEventHandler(ClientSearch::OnClickClose));
+    m_btnQuickAdd = WU::MakeButton(bar, "간편 추가", &ClientSearch::OnClickQuickAdd, this);
+    m_btnClose = WU::MakeButton(bar, "닫기", &ClientSearch::OnClickClose,this);
 
     h->Add(m_btnQuickAdd, 0, wxRIGHT, 6);
     h->Add(m_btnClose, 0, wxRIGHT);
@@ -77,7 +77,7 @@ void ClientSearch::BuildSearchBar(wxBoxSizer* root)
     m_edQuery = new wxTextCtrl(row, wxID_ANY, "", wxDefaultPosition, wxSize(260, -1));
     h->Add(m_edQuery, 1, wxALIGN_CENTER_VERTICAL | wxRIGHT, 6);
 
-    m_btnSearch = MakeButton(row, "검색", wxCommandEventHandler(ClientSearch::OnClickSearch));
+    m_btnSearch = WU::MakeButton(row, "검색", &ClientSearch::OnClickSearch,this);
     h->Add(m_btnSearch, 0, wxALIGN_CENTER_VERTICAL);
 
     root->Add(row, 0, wxEXPAND | wxALL, 6);
@@ -113,14 +113,6 @@ void ClientSearch::BuildNotebook(wxBoxSizer* root)
             1, wxEXPAND | wxALL, 6);
     }
 }
-
-wxButton* ClientSearch::MakeButton(wxWindow* parent, const wxString& text, wxObjectEventFunction handler, int rightPad, long style)
-{
-    auto* b = new wxButton(parent, wxID_ANY, text, wxDefaultPosition, wxDefaultSize, style);
-    if (handler) b->Bind(wxEVT_BUTTON, handler, this);
-    return b;
-}
-
 
 void ClientSearch::AutoPadLastColumn(wxGrid* grid, int extra)
 {

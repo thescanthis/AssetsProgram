@@ -11,39 +11,12 @@
 #include <wx/settings.h>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
-#include "Types.h"
-
-#include <windows.h>
-#include <iostream>
-#include <iterator>
-#include <assert.h>
-#include <vector>
-#include <unordered_map>
-#include <unordered_set>
-#include <algorithm>
-#include <string>
-#include <queue>
-#include <map>
-#include <stack>
-#include <list>
-#include <set>
-#include <tuple>
-#include <typeindex>
-
-#include <chrono>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <functional>
+#include "WidgetTypes.h"
+#include "CorePch.h"
 
 #include "TemplateFunc.h"
 #include "WidgetUtilsFunc.h"
 #include "DBTest.h"
-
-#include <winsock2.h>
-#include <mswsock.h>
-#include <ws2tcpip.h>
-#pragma comment(lib, "ws2_32.lib")
 
 #if _DEBUG
 #pragma comment (lib,"wxbase32ud.lib")
@@ -73,3 +46,22 @@
 #pragma comment (lib,"Comctl32.lib")
 #elif Relelase Librarys
 #endif
+
+#ifdef _DEBUG
+#pragma comment(lib, "ServerCore\\Debug\\ServerCore.lib")
+#pragma comment(lib, "Protobuf\\Debug\\libprotobufd.lib")
+#else
+#pragma comment(lib, "ServerCore\\Release\\ServerCore.lib")
+#pragma comment(lib, "Protobuf\\Release\\libprotobuf.lib")
+#endif
+
+
+//#ifdef _MSC_VER
+//#  ifdef _DEBUG
+//#    define _CRTDBG_MAP_ALLOC
+//#    include <crtdbg.h>
+//#    define DBG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+//#    define new DBG_NEW
+//#  endif
+// Main Header에 맨윗줄에_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);  // 자동 릭 체크
+//#endif

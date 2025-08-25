@@ -15,9 +15,6 @@ private:
     void BuildNotebook(wxBoxSizer* root);
 
     // === °ø¿ë ÇïÆÛ ===
-    wxButton* MakeButton(wxWindow* parent, const wxString& text,
-        wxObjectEventFunction handler,
-        int rightPad = 0, long style = 0);
    
     void      AutoPadLastColumn(wxGrid* grid, int extra = 10);
     void      InstallEscToClose();

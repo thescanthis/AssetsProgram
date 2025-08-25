@@ -2,16 +2,7 @@
 #include <wx/wx.h>
 #include <wx/grid.h>
 #include <array>
-
-using BYTE = unsigned char;
-using int8 = __int8;
-using int16 = __int16;
-using int32 = __int32;
-using int64 = __int64;
-using uint8 = unsigned __int8;
-using uint16 = unsigned __int16;
-using uint32 = unsigned __int32;
-using uint64 = unsigned __int64;
+#include "Types.h"
 
 enum
 {
@@ -54,13 +45,14 @@ struct I_Detalis
 const wxArrayString LabelStr = { "상품명","날짜","상품번호","거래처","수량","단위","재고분류","사업명" };
 const int32 wid[8] = { 140,70,140,210,70,70,70,180 };
 
-//ProductInfo,CompanyDetails
+//ProductInfo
 const wxArrayString P_LabelStr = {"상품코드","상품명"};
-const int32 P_gridWid[2] = { 70,140};
+const int32 P_gridWid[2] = { 70,155};
 
 //ClientInfo
 const wxArrayString C_LabelStr = { "선택","회사명","사업자번호","대표자명" };
 const int32 C_gridWid[4] = { 30,170,90,50 };
+
 
 extern class TemplateFunc* G_Template;
 extern class DBTest* DBMaps;
